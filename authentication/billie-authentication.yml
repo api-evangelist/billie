@@ -1,0 +1,31 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.billie.io/reference/authentication.md
+docs: https://docs.billie.io/reference/authentication
+notes: >-
+  Billie's Payment API uses OAuth 2.0 client_credentials. Merchants receive a
+  Client ID and Client Secret at onboarding and exchange them at the token
+  endpoint for a Bearer JWT, presented on every request as
+  `Authorization: Bearer <jwt>`. Tokens expire after 8 hours (default TTL);
+  on HTTP 401 the client requests a fresh token and retries. Tokens can be
+  validated and revoked via dedicated OAuth endpoints. No user-delegated
+  authorization-code flow and no granular OAuth scopes are documented — the
+  client-credentials grant conveys the merchant's full API entitlement.
+summary:
+  types: [oauth2]
+  oauth2_flows: [clientCredentials]
+  api_key_in: []
+schemes:
+  - name: OAuth2
+    type: oauth2
+    flow: clientCredentials
+    grant_type: client_credentials
+    token_url: https://paella.billie.io/api/v2/oauth/token
+    token_url_sandbox: https://paella-sandbox.billie.io/api/v2/oauth/token
+    token_ttl_seconds: 28800
+    token_format: JWT
+    header: 'Authorization: Bearer <access_token>'
+    validate_endpoint: GET /api/v2/oauth/token
+    revoke_endpoint: DELETE /api/v2/oauth/token
+    scopes: []
+    source: https://docs.billie.io/reference/authentication
