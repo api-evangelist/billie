@@ -1,8 +1,29 @@
 aid: billie
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/billie.png
 name: Billie
-description: 'Billie is a company surfaced as a portfolio company of creandum, speedinvest and added to
-  the API Evangelist network as a stub for enrichment. Sector: fintech. This profile is a lead awaiting
-  the enrichment pipeline.'
+description: >-
+  Billie is a Berlin-based B2B "buy now, pay later" (BNPL) payment provider that
+  lets merchants offer business buyers invoice purchase, pay-after-delivery, and
+  installment terms at checkout while Billie assumes the credit and fraud risk
+  and pays the merchant out. Its Payment API v2 (paella.billie.io) uses OAuth 2.0
+  client-credentials and covers checkout sessions, a hosted payment page, direct
+  backend order creation, order management, captures (invoicing), payment
+  confirmation, refunds/credit notes, and a webhook event surface. Billie also
+  ships an embeddable checkout widget, a PHP SDK, e-commerce plugins (Shopware,
+  Magento, WooCommerce, JTL), and partner routes via Klarna, Mollie, Adyen,
+  Stripe, and Kustom. Backed by Creandum and Speedinvest.
 url: https://raw.githubusercontent.com/api-evangelist/billie/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -13,16 +34,126 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
 - Fintech
-apis: []
+- Payments
+- BNPL
+- Buy Now Pay Later
+- B2B
+- Invoicing
+- Checkout
+- Germany
+apis:
+- name: Billie Payment API
+  description: >-
+    OAuth2 client-credentials REST API for B2B BNPL: checkout sessions, hosted
+    payment page, backend order creation, order management, captures (invoices),
+    payment confirmation, refunds/credit notes, and webhooks.
+  humanURL: https://docs.billie.io/reference/integration-checklist
+  baseURL: https://paella.billie.io/api/v2
+  properties:
+  - type: Documentation
+    url: https://docs.billie.io/
+  - type: APIReference
+    url: https://docs.billie.io/reference/integration-checklist
+  - type: Authentication
+    url: authentication/billie-authentication.yml
+  - type: Webhooks
+    url: asyncapi/billie-webhooks.yml
+  - type: Sandbox
+    url: sandbox/billie-sandbox.yml
+  - type: DeclineCodes
+    url: errors/billie-decline-codes.yml
+  - type: ErrorCatalog
+    url: errors/billie-problem-types.yml
+  - type: Conventions
+    url: conventions/billie-conventions.yml
+  - type: Lifecycle
+    url: lifecycle/billie-lifecycle.yml
+  - type: Conformance
+    url: conformance/billie-conformance.yml
+  - type: DataModel
+    url: data-model/billie-data-model.yml
+  - type: MCPServer
+    url: mcp/billie-mcp.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: VulnerabilityDisclosure
+  url: security/billie-vulnerability-disclosure.yml
+- type: Security
+  url: https://billie.io/coordinated-vulnerability-disclosure-policy
+- type: DomainSecurity
+  url: security/billie-domain-security.yml
 - type: Website
   url: https://www.billie.io/
+- type: DeveloperPortal
+  url: https://docs.billie.io/
+- type: Documentation
+  url: https://docs.billie.io/
+- type: APIReference
+  url: https://docs.billie.io/reference/integration-checklist
+- type: GettingStarted
+  url: https://docs.billie.io/docs/get-started-with-billies-api-integration
+- type: Authentication
+  url: authentication/billie-authentication.yml
+- type: SDKs
+  url: packages/billie-packages.yml
+- type: Packages
+  url: packages/billie-packages.yml
+- type: Sandbox
+  url: sandbox/billie-sandbox.yml
+- type: Webhooks
+  url: asyncapi/billie-webhooks.yml
+- type: MCPServer
+  url: mcp/billie-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/billie-llms.txt
+- type: WellKnown
+  url: well-known/billie-well-known.yml
+- type: SecurityTxt
+  url: well-known/billie-security.txt
+- type: Conventions
+  url: conventions/billie-conventions.yml
+- type: DeclineCodes
+  url: errors/billie-decline-codes.yml
+- type: ErrorCatalog
+  url: errors/billie-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/billie-lifecycle.yml
+- type: StatusPage
+  url: https://status.billie.io/
+- type: Conformance
+  url: conformance/billie-conformance.yml
+- type: DataModel
+  url: data-model/billie-data-model.yml
+- type: Components
+  url: components/billie-components.yml
+- type: Support
+  url: https://help.billie.io/merchant/s/
+- type: HelpCenter
+  url: https://help.billie.io/merchant/s/
+- type: Blog
+  url: https://www.billie.io/blog
+- type: GitHubOrganization
+  url: https://github.com/ozean12
+- type: SignUp
+  url: https://dashboard.billie.io/public/registration
+- type: Login
+  url: https://dashboard.billie.io/public/login
+- type: PrivacyPolicy
+  url: https://www.billie.io/datenschutz
+- type: Imprint
+  url: https://www.billie.io/impressum
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

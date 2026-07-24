@@ -1,0 +1,46 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.billie.io/docs/sandbox-testing-platform.md
+docs: https://docs.billie.io/docs/sandbox-testing-platform
+notes: >-
+  Billie provides a sandbox environment with a separate host and credentials
+  issued at merchant onboarding (not self-serve). Test scenarios are driven by
+  specific published test-company data and email conventions rather than magic
+  card numbers (Billie is invoice/BNPL, not card-based). The sandbox validates
+  against real German commercial-register data, so only the published fixtures
+  below resolve. All values are copied verbatim from Billie's testing docs;
+  none are invented.
+environments:
+  sandbox:
+    api_base_url: https://paella-sandbox.billie.io/api/v2
+    token_url: https://paella-sandbox.billie.io/api/v2/oauth/token
+    credentials: Provided directly by Billie during onboarding (Developer section of the Merchant Dashboard).
+  production:
+    api_base_url: https://paella.billie.io/api/v2
+    token_url: https://paella.billie.io/api/v2/oauth/token
+test_scenarios:
+  approved_order:
+    company_name: Zeta Electronics Gold GmbH
+    street: Tannenweg 4
+    postcode: '77716'
+    city: Haslach im Kinzigtal
+    state: Baden-Württemberg
+    registration_number: HRB 934855
+    vat_id: DE812345678
+    contact_name: Uno Eins
+    email: Use your real email address.
+  company_suggestion_flow:
+    company_name: Barney fun
+    note: Reuse the approved-order address details above.
+  declined_order:
+    note: >-
+      Use the approved-order data but change the email to
+      "<first name>.<last name>+decline+limit@billie.io" to force a decline.
+  unrecognized_buyer:
+    company_name: Billie GmbH
+    address: Chausseestr. 100, 10100 Berlin
+    note: Company can be auto-filled via the company search.
+constraints:
+  - Sandbox validates real company addresses; fabricated addresses error out.
+  - 'Klarna Checkout integrations accept only the commercial-register format e.g. HRB182428.'
+international_test_accounts: https://docs.billie.io/docs/international-test-buyer-accounts

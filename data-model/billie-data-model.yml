@@ -1,0 +1,41 @@
+generated: '2026-07-18'
+method: derived
+source: https://docs.billie.io/llms.txt
+docs: https://docs.billie.io/reference/order-states-and-decline-reasons
+notes: >-
+  Entity-relationship graph derived from the documented Billie Payment API v2
+  operations and payloads (no downloadable OpenAPI is exposed, so relationships
+  are read from the reference pages). Identifiers observed: order `uuid`,
+  merchant `external_code`, capture/invoice `captureId`.
+entities:
+  - name: checkout_session
+    id: id
+    description: Session initializing the Billie widget / hosted payment page for a buyer.
+    operations: [create_checkout_session_v2, create_hpp_checkout_session_v2, confirm_authorization_v2, get_checkout_session_authorization_v2]
+  - name: order
+    id: uuid
+    external_id: external_code
+    description: An authorized B2B purchase to be financed by Billie.
+    operations: [order_create_v2, order_get_details_v2, order_update_v2, order_cancel_v2]
+  - name: debtor
+    id: null
+    description: The buyer company (identified by name, address, commercial-register number, VAT ID).
+  - name: line_item
+    id: external_id
+    description: A product line within an order (title, quantity, amount).
+  - name: invoice
+    id: captureId
+    external_id: external_code
+    description: A capture against an order (partial or full), i.e. the shipped invoice.
+    operations: [invoice_create, get_invoice, invoice_update, invoice_cancel_v2, invoice_payment_confirm]
+  - name: credit_note
+    id: null
+    description: A refund against a previous capture (partial or full).
+    operations: [create_credit_note]
+relationships:
+  - {from: checkout_session, to: order, type: has_one, via: order authorization/confirmation}
+  - {from: order, to: debtor, type: belongs_to, via: debtor}
+  - {from: order, to: line_item, type: has_many, via: line_items}
+  - {from: order, to: invoice, type: has_many, via: captures}
+  - {from: invoice, to: order, type: belongs_to, via: order uuid}
+  - {from: credit_note, to: invoice, type: belongs_to, via: captureId}

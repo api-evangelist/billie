@@ -1,0 +1,50 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.billie.io/reference/integration-checklist.md
+docs: https://docs.billie.io/docs/payment-flow-overview
+notes: >-
+  Cross-cutting request/response semantics for the Billie Payment API v2,
+  captured from the public reference. Billie does NOT document an
+  idempotency-key header, cursor/offset pagination, sparse-fieldsets, field
+  expansion, a request-id trace header, or rate-limit response headers — so no
+  Idempotency pointer is emitted (absence is recorded, not fabricated).
+  Cross-links: authentication/billie-authentication.yml,
+  errors/billie-problem-types.yml, errors/billie-decline-codes.yml,
+  lifecycle/billie-lifecycle.yml.
+authentication:
+  style: oauth2-client-credentials
+  header: 'Authorization: Bearer <jwt>'
+  detail: authentication/billie-authentication.yml
+versioning:
+  scheme: uri-path
+  current: v2
+  base_path: /api/v2
+idempotency:
+  supported: false
+  detail: >-
+    No Idempotency-Key header or documented idempotent-retry contract. Order
+    de-duplication relies on the merchant-supplied `external_code` (order
+    number), which Billie enforces as immutable once set on an order.
+pagination:
+  supported: false
+  detail: >-
+    No list endpoints with cursor/offset pagination are documented; resources
+    are addressed directly by uuid / captureId.
+field_expansion:
+  supported: false
+metadata:
+  supported: partial
+  detail: >-
+    Merchant correlation via `external_code` on orders and captures; free-text
+    `comment` on order creation. No generic key/value metadata object.
+request_tracing:
+  request_id_header: null
+error_envelope:
+  detail: >-
+    Validation failures return field-level errors; order/authorization
+    declines surface a `decline_reason` code (see errors/billie-decline-codes.yml).
+    Auth failures return HTTP 401. No RFC 9457 application/problem+json media
+    type is documented.
+rate_limiting:
+  signaled: false
+  detail: No rate-limit response headers (X-RateLimit-*, Retry-After) documented.

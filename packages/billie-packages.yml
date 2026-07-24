@@ -1,0 +1,48 @@
+generated: '2026-07-18'
+method: searched
+source: https://packagist.org/search.json?q=billie
+notes: >-
+  Billie is operated by ozean12 GmbH; its verified GitHub organization is
+  github.com/ozean12 (domain billie.io). The first-party API client is the
+  PHP SDK published on Packagist as billie/api-php-sdk. The remaining
+  packages are first-party e-commerce payment plugins/modules (Shopware,
+  Magento). No JavaScript/Python/Java/Go/Ruby/.NET client libraries are
+  published.
+packages:
+  - language: php
+    registry: packagist
+    name: billie/api-php-sdk
+    url: https://packagist.org/packages/billie/api-php-sdk
+    repository: https://github.com/ozean12/billie-shop-plugin-sdk
+    install: composer require billie/api-php-sdk
+    description: SDK PHP for the Billie.io API.
+    downloads: 47470
+    official: true
+    kind: sdk
+  - language: php
+    registry: packagist
+    name: billie/shopware6-payment-module
+    url: https://packagist.org/packages/billie/shopware6-payment-module
+    repository: https://github.com/ozean12/shopware6-payment-module
+    install: composer require billie/shopware6-payment-module
+    description: Billie payment for Shopware 6.
+    official: true
+    kind: plugin
+  - language: php
+    registry: packagist
+    name: billie/shopware5-payment-module
+    url: https://packagist.org/packages/billie/shopware5-payment-module
+    repository: https://github.com/ozean12/shopware5-payment-module
+    install: composer require billie/shopware5-payment-module
+    description: B2B invoicing payment module for Shopware 5.
+    official: true
+    kind: plugin
+  - language: php
+    registry: packagist
+    name: billie/magento2-payment-module
+    url: https://packagist.org/packages/billie/magento2-payment-module
+    repository: https://github.com/ozean12/magento2-payment-module
+    install: composer require billie/magento2-payment-module
+    description: Billie "pay after delivery" payment method for Magento 2.
+    official: true
+    kind: plugin

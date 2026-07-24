@@ -1,0 +1,82 @@
+# Billie Docs Documentation
+
+> Documentation for Billie Docs
+
+## Guides
+- [Introduction](https://docs.billie.io/docs/introduction.md)
+- [Integration Types](https://docs.billie.io/docs/billie-direct-vs-klarna-integration.md)
+- [Overview](https://docs.billie.io/docs/payment-flow-overview.md)
+- [Order Creation](https://docs.billie.io/docs/introduction-1.md)
+- [Changing the order amount](https://docs.billie.io/docs/changing-the-order-amount.md): There can be many reasons why an order amount needs to be changed after the initial order creation. Currently, the amount of all orders via Billie can only be lowered (not raised).
+- [Cancelation of an order](https://docs.billie.io/docs/raising-the-order-amount.md)
+- [Get Started via API](https://docs.billie.io/docs/get-started-with-billies-api-integration.md)
+- [Get Started via Partner](https://docs.billie.io/docs/get-started-with-billies-integration-via-klarna.md)
+- [Testing](https://docs.billie.io/docs/sandbox-testing-platform.md)
+- [International test buyer accounts](https://docs.billie.io/docs/international-test-buyer-accounts.md)
+- [Partner Checkout Design Guide](https://docs.billie.io/docs/checkout-design-guide-psp.md)
+- [Go-Live Checklist](https://docs.billie.io/docs/go-live-checklist.md)
+- [Material for global markets](https://docs.billie.io/docs/material-for-global-markets.md)
+- [Invoice Content](https://docs.billie.io/docs/invoice-description-partner.md)
+- [Material for Sweden (via Klarna)](https://docs.billie.io/docs/go-live-in-sweden.md)
+- [Model Clauses for T&Cs](https://docs.billie.io/docs/terms-model-clauses.md)
+- [Invoice Content](https://docs.billie.io/docs/invoice-description-se.md)
+- [Direct Checkout Design Guide](https://docs.billie.io/docs/billie-payment-brand-guide.md)
+- [Go-Live Checklist](https://docs.billie.io/docs/go-live-checklist-direct.md)
+- [Material for Germany](https://docs.billie.io/docs/germany.md)
+- [Model Clauses for T&Cs](https://docs.billie.io/docs/sample-text-agb.md)
+- [Billie Shipping Policy (delivery and return)](https://docs.billie.io/docs/billing-shipping-policy.md)
+- [Invoice Description](https://docs.billie.io/docs/invoice-description.md)
+- [Intro](https://docs.billie.io/docs/conversion-optimisation.md)
+- [Checkout](https://docs.billie.io/docs/checkout.md)
+- [Product Detail Page](https://docs.billie.io/docs/product-detail-page.md)
+- [Product List Page](https://docs.billie.io/docs/product-list-page.md)
+- [Sitewide](https://docs.billie.io/docs/sitewide.md)
+- [Micro Page / FAQs](https://docs.billie.io/docs/micro-page-faqs.md)
+- [Newsletter](https://docs.billie.io/docs/email.md)
+- [Abandoned Cart Notification](https://docs.billie.io/docs/abandoned-cart.md)
+- [Social & Paid Media](https://docs.billie.io/docs/social-media-de.md)
+- [FAQ Content](https://docs.billie.io/docs/faq-content.md)
+- [Templates](https://docs.billie.io/docs/templates.md)
+- [Billie Marketing Badge](https://docs.billie.io/docs/logos-trademarks.md)
+- [Banners](https://docs.billie.io/docs/banners.md)
+
+## API Reference
+- [Integration Checklist](https://docs.billie.io/reference/integration-checklist.md)
+- [Authentication](https://docs.billie.io/reference/authentication.md)
+- [Request OAuth Token](https://docs.billie.io/reference/oauth_token_create.md): <!-- Grants documentation taken from: https://oauth2.thephpleague.com/ -->  ### Flow  The client sends a POST request with following body parameters to the authorization server:  * `grant_type` with the value `client_credentials` * `client_id` with the client's ID * `client_secret` with the client's secret  The authorization server will respond with a JSON object containing the following properties:  * `token_type` with the value `Bearer` * `expires_in` with an integer representing the TTL (in seconds) of the access token (Default is 8 hours) * `access_token` a JWT signed with the authorization server's private key  The `access_token` should be used in the `Authorization` header together with the `Bearer` challenge to authenticate all the requests.  > Example: `Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c`.
+- [Validate OAuth Token](https://docs.billie.io/reference/oauth_token_validate.md): Validates the `Authorization: Bearer XXXX` OAuth 2.0 token header and returns a successful response with `client_id` and `user_id` or fails if it's invalid.
+- [Revoke OAuth Token](https://docs.billie.io/reference/oauth_token_revoke.md): Revokes the oAuth token using the token from the `Authorization: Bearer XXXX` header and returns a 204 response
+- [Checkout Session Confirm](https://docs.billie.io/reference/confirm_authorization_v2.md): **Purpose**  Confirms the creation of an authorization where the buyer gave consent to the purchase and was accepted by Billie.  **Preconditions:**  - Session `id` of the Session Create Call - Request body created with the response values received in the widget.   **Success**  - Response Code: `HTTP 202` - response body: `state` -> `created` - response body: `uuid` -> ID of the created order  **Attention**  - The `duration` and the objects `delivery_address` and `amount` you can copy from the widget response to the new request object. - The `amount` must be the same as submitted via the widget. - The `debtor_company` object from the widget response needs to be rebuilt to an object hierarchy `debtor` with `company_address`
+- [Checkout Client](https://docs.billie.io/reference/checkout-widget.md)
+- [Checkout Session Create](https://docs.billie.io/reference/create_checkout_session_v2.md): **Purpose:**  Creates a session ID that is used to initiate the widget for a dedicated checkout session with a customer.   **Preconditions:**  - n/a  **Success:**  - Response Code: HTTP 200 - response body: `id` → session ID for the checkout session  **Attention:**  - The session has an expiry time of 48 hours.
+- [Hpp Checkout Session Create](https://docs.billie.io/reference/create_hpp_checkout_session_v2.md): **Purpose**  Creates a session ID and redirect URL that are used to initiate a Hosted Payment Page.  **Preconditions:**  - All the authorization related data is present. - Accept and decline URL are present to redirect the buyer from the hosted payment page after the authorization attempt.  **Success**  - Response Code: `HTTP 201` - Response body: `session_id` -> Session ID for the checkout session which will be used to get the authorization detail and also confirm the checkout session. - Response body: `hpp_url` -> URL to redirect or send to buyer to access the hosted payment page. - Response body: `expires_at` -> Expiration time of the checkout session.   **Attention:**  - The session has an expiry time of 48 hours.
+- [Get Authorization](https://docs.billie.io/reference/get_checkout_session_authorization_v2.md): Return last authorization for the given checkout session.
+- [Create Order](https://docs.billie.io/reference/order_create_v2.md): **Purpose:**  Creates an order directly from the backend without buyer interaction.  **Preconditions:**   - All the order related data is present  **Success:**   - Response Code: `HTTP 200` - Response body: `state` -> `created` - Response body: `uuid` -> ID of the created order  **Attention:**  This call should be used when the buyer consent is received by another channel.
+- [Get Legal Forms](https://docs.billie.io/reference/get_legal_forms.md): **Purpose:**  Retrieves a list of valid legal form codes in relation to the legal for names.  **Success:**   - Response Code: `HTTP 200`
+- [Order States & Decline Reasons](https://docs.billie.io/reference/order-states-and-decline-reasons.md)
+- [Cancel Order](https://docs.billie.io/reference/order_cancel_v2.md): **Purpose:**  Cancels an entire order. For cancellations after capture, please see Refunds.  **Preconditions:**   - `id`: The unique identifier of the order  **Success:**   - Response Code: `HTTP 204`
+- [Get Order Details](https://docs.billie.io/reference/order_get_details_v2.md): **Purpose:**  Retrieves full information about an order.  **Preconditions:**   - `id`: The unique identifier of the order  **Success:**   - Response Code: `HTTP 200`
+- [Update Order](https://docs.billie.io/reference/order_update_v2.md): **Purpose:**  Updates order information before capture.    - Adding an external code that represents the order ID of the merchant if not already submitted previously. - Changes the order amount associated with the order.  **Preconditions:**   - `id`: The unique identifier of the order - order is in `state` `created` and does not already has ane `external_code` for an update of 'external_code` - order is in `state` `created` or `partially_shipped` for an update of the order amount  **Success: **  - Response Code: HTTP 204  **Attention:**  - The value provided under `external_code` (the order number from your backend) will be used by Billie in communication with the buyer after capture. - If an `external_code` was provided at *create order* or *confirm session* call the uptade order call will fail, if it is a different `external_code`. - Lowering the values under the `amount` object to equal the sum of all partial captures will result in the order state to transition from `partially_shipped` to `shipped`. - If the update order call increases the amount of the order, the increased amount will be subject to all checks and validations as a newly created order. - If any part of the update order call is failing, no changes to the original order will be applied.
+- [Get Invoice](https://docs.billie.io/reference/get_invoice.md): **Purpose:**  Retrieves full information about a capture.  **Preconditions:**   - `captureId`: The unique identifier of the capture  **Success:**   - Response Code: `HTTP 200`
+- [Confirm Invoice Payment](https://docs.billie.io/reference/invoice_payment_confirm.md): **Purpose:**  Confirms that the buyer (your customer) paid a given amount relating to a capture to your bank account, rather than Billie's. Billie will reduce the outstanding amount accordingly and debit the amount you provided from your upcoming settlement.   **Preconditions:**   - `captureId`: The unique identifier of the capture - amount that the buyer paid to you  **Success:**   - Response Code: `HTTP 204`  **Attention:**  - The amount provided does not exceed the sum of all captures of the related order.
+- [Create Invoice](https://docs.billie.io/reference/invoice_create.md): **Purpose:**  Captures against an order. This can be done against part of the authorised order amount (partial capture) or its entire amount (full capture).   For partial captures, please submit each as a separate request specifying the amount until the full amount of the associated Order is reached.   **Preconditions:**   - `id`: The unique identifier of the order - Order with `id` has a sufficient unshipped `amount` (not lower than the `amount` provided to be captured). - Invoice Number present as `external_code`  - Invoice present and reachable for download at `invoice_url`  **Success:**   - Response Code: `HTTP 201` - Response body: 'uuid` -> unique identifier of the capture  **Attention:**  - Only one order `id` can be provided per request. - Don’t submit a negative `amount` value. - The referenced order will change its state to `shipped` if the full `amount` is captured and `partially_shipped` for a capture amount lower then the order amount.  - Capturing an order that is already partially shipped with an amount equal to the remaining amount will change the state of the order from `partially_shipped` to `shipped`.
+- [Update Invoice](https://docs.billie.io/reference/invoice_update.md): **Purpose:**  Provides the external code relating to a capture (the invoice number in your backend) and URL to your invoice document (allowing Billie to obtain it) if not already provided under Create Capture.   **Preconditions:**   - `captureId`: The unique identifier of the capture  **Success:**   - Response Code: `HTTP 204`  **Attention:**  - Invoice Number and Invoice File will be replaced by the new items if already sent in the Create Capture call or previous Update Capture calls.
+- [Invoice States](https://docs.billie.io/reference/invoice-state-desc.md)
+- [Cancel Invoice](https://docs.billie.io/reference/invoice_cancel_v2.md): **Purpose:**  Refunds the full amount of a past capture.  **Preconditions:**   - `captureId`: The unique identifier of the capture  **Success:**   - Response Code: `HTTP 204`
+- [Create Credit Note](https://docs.billie.io/reference/create_credit_note.md): **Purpose:**  To refund against a previous capture. This can be done against part of the captured amount (partial refund) or its entire amount (full refund).  **Preconditions:**   - `captureId`: The unique identifier of the capture - `amount`: The amount to be refunded  **Success:**   - Response Code: `HTTP 201`  **Attention:**  - The amount provided in the refund request does not exceed the amount of the capture.
+- [Webhooks](https://docs.billie.io/reference/webhooks.md)
+- [Overview](https://docs.billie.io/reference/overview-1.md)
+- [Shopware Integration](https://docs.billie.io/reference/shopware.md)
+- [JTL Integration](https://docs.billie.io/reference/jtl-integration.md)
+- [WooCommerce Integration](https://docs.billie.io/reference/woocommerce.md)
+- [SDK Integration](https://docs.billie.io/reference/sdk-integration.md)
+- [Klarna](https://docs.billie.io/reference/klarna.md)
+- [Klarna Payments via API](https://docs.billie.io/reference/integration-via-klarna-payments.md)
+- [Klarna Payments via Computop](https://docs.billie.io/reference/klarna-payments-integration-computop.md)
+- [Kustom Checkout Integration](https://docs.billie.io/reference/klarna-checkout-integration.md)
+- [Mollie](https://docs.billie.io/reference/mollie.md)
+- [Adyen](https://docs.billie.io/reference/adyen.md)
+- [Stripe](https://docs.billie.io/reference/stripe.md)
+
+## Pages
+- [404](https://docs.billie.io/error-page.md)

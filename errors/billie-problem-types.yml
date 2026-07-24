@@ -1,0 +1,34 @@
+generated: '2026-07-18'
+method: derived
+source: https://docs.billie.io/reference/integration-checklist.md
+format: custom
+notes: >-
+  Derived from the documented HTTP response semantics of the Billie Payment
+  API v2 reference (no downloadable OpenAPI is exposed by the ReadMe-hosted
+  docs, so statuses are read from the endpoint reference pages). Billie does
+  not document an RFC 9457 application/problem+json media type; validation
+  failures return field-level errors and authorization declines carry a
+  `decline_reason` code (see errors/billie-decline-codes.yml). Success codes
+  are included for completeness of the response contract.
+problems:
+  - status: 401
+    title: Unauthorized
+    detail: Missing, invalid, or expired Bearer token. Request a new OAuth token and retry.
+    source: https://docs.billie.io/reference/authentication
+  - status: 400
+    title: Validation error
+    detail: Request body failed validation (e.g. missing amount/duration/debtor, or duration outside 1-120 days).
+    source: https://docs.billie.io/reference/order_create_v2
+  - status: 404
+    title: Not found
+    detail: The referenced order (uuid) or capture (captureId) does not exist.
+    source: https://docs.billie.io/reference/order_get_details_v2
+  - status: 422
+    title: Unprocessable / declined
+    detail: Order could not be authorized; inspect `decline_reason` (see decline codes).
+    source: https://docs.billie.io/reference/order-states-and-decline-reasons
+success_codes:
+  - {status: 200, meaning: 'OK — session/order created or details returned (state=created, uuid returned)'}
+  - {status: 201, meaning: 'Created — capture (invoice) or credit note created; uuid returned'}
+  - {status: 202, meaning: 'Accepted — checkout session confirmed (state=created)'}
+  - {status: 204, meaning: 'No Content — cancel order, cancel invoice, confirm payment, update succeeded'}

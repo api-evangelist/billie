@@ -1,0 +1,55 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.billie.io/reference/webhooks.md
+docs: https://docs.billie.io/reference/webhooks
+spec_type: Webhooks
+notes: >-
+  Billie documents a webhook event surface but publishes no AsyncAPI document,
+  so this captures the webhook catalog (type Webhooks). Webhooks are not on by
+  default — a merchant requests activation via their Billie contact and
+  registers a single endpoint URL. Billie POSTs application/json; the merchant
+  supplies the auth mechanism it expects Billie to send (Basic, X-Api-Key, or a
+  custom header). No cryptographic signature scheme is documented.
+delivery:
+  transport: http-webhook
+  method: POST
+  content_type: application/json
+  activation: On request via Billie sales/onboarding contact (not default).
+  auth_options:
+    - 'Authorization: Basic <api_key>'
+    - 'X-Api-Key: <api_key>'
+    - custom header carrying the API key
+  signature: none-documented
+payload_fields:
+  - {field: created_at, type: datetime}
+  - {field: event, type: string}
+  - {field: order_id, type: string}
+  - {field: order_uuid, type: string}
+  - {field: invoice_uuid, type: string, optional: true}
+  - {field: amount, type: string, optional: true}
+  - {field: open_amount, type: string, optional: true}
+events:
+  order_lifecycle:
+    - order_waiting
+    - order_created
+    - order_approved
+    - order_declined
+    - order_shipped
+    - order_canceled
+    - order_paid_out
+  invoice_lifecycle:
+    - invoice_created
+    - invoice_paid_out
+    - invoice_late
+  dunning_collections:
+    - dunning
+    - dunning_paused
+    - promise_to_pay
+    - instalment_plan
+    - dispute
+    - dca
+    - archived
+    - closed
+  payments:
+    - payment
+    - clawback

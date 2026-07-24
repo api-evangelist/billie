@@ -1,0 +1,16 @@
+generated: '2026-07-18'
+method: generated
+source: https://docs.billie.io/reference
+skills:
+  - file: billie-backend-order-and-capture.md
+    name: Create a backend order and capture it
+    api: https://docs.billie.io/reference
+    operations: [oauth_token_create, order_create_v2, order_get_details_v2, invoice_create, invoice_payment_confirm]
+  - file: billie-widget-checkout.md
+    name: Accept a Billie payment via the checkout widget
+    api: https://docs.billie.io/reference
+    operations: [oauth_token_create, create_checkout_session_v2, get_checkout_session_authorization_v2, confirm_authorization_v2, invoice_create]
+  - file: billie-refund-and-cancel.md
+    name: Cancel an order or refund a capture
+    api: https://docs.billie.io/reference
+    operations: [oauth_token_create, order_cancel_v2, invoice_cancel_v2, create_credit_note, get_invoice]

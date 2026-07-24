@@ -1,0 +1,42 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.billie.io/reference/order-states-and-decline-reasons.md
+docs: https://docs.billie.io/reference/order-states-and-decline-reasons
+notes: >-
+  Billie is a B2B buy-now-pay-later (invoice/installment) provider. When an
+  order cannot be financed, the authorization is declined with a
+  `decline_reason` code rather than a card network decline. These codes appear
+  on the order object and via the `order_declined` webhook. This complements
+  errors/billie-problem-types.yml (API/transport-level errors).
+envelope_field: decline_reason
+order_states:
+  - waiting
+  - pre_waiting
+  - created
+  - authorized
+  - declined
+  - partially_shipped
+  - shipped
+  - complete
+  - cancelled
+  - authorization_cancelled
+decline_codes:
+  - code: debtor_address
+    meaning: Debtor address or name mismatch.
+    action: Verify and correct the buyer company name and registered address, then retry.
+  - code: debtor_not_identified
+    meaning: Debtor could not be identified with the information given.
+    action: Provide a valid commercial-register number / VAT ID and complete company details.
+  - code: risk_policy
+    meaning: Risk decline.
+    action: Not eligible under Billie's risk policy; offer the buyer an alternative payment method.
+  - code: risk_scoring_failed
+    meaning: Not enough data available to make a decision.
+    action: Insufficient data to score the debtor; offer an alternative payment method.
+  - code: debtor_limit_exceeded
+    meaning: Financing limit of debtor currently exceeded.
+    action: The buyer's current Billie financing limit is exhausted; retry later or reduce the amount.
+buyer_masking: >-
+  Decline reasons are operational codes returned to the merchant; Billie does
+  not publish a buyer-facing masked mapping. Merchants should present a generic
+  "payment method unavailable" message to the buyer rather than the raw reason.

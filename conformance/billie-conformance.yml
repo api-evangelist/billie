@@ -1,0 +1,36 @@
+generated: '2026-07-18'
+method: derived
+source: https://docs.billie.io/reference/authentication.md
+notes: >-
+  Cross-cutting standards conformance for the Billie Payment API v2, derived
+  from the public reference. No published certification/compliance program
+  (SOC 2 / ISO 27001 / PCI DSS) was found on a trust or security page, so no
+  Compliance pointer is emitted from this file.
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: OAuth 2.0 client_credentials grant with Bearer JWT (docs/reference/authentication).
+  - id: oauth2-client-credentials
+    conforms: true
+    evidence: Machine-to-machine client_credentials flow; token TTL 8h, validate + revoke endpoints.
+  - id: oidc
+    conforms: false
+    evidence: No OpenID Connect / openid-configuration discovery document.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: No application/problem+json media type documented; declines use a decline_reason code.
+  - id: rfc9116-security-txt
+    conforms: true
+    evidence: Valid /.well-known/security.txt with Policy/Contact/Expires (well-known/billie-security.txt).
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No Sunset/Deprecation header contract documented.
+  - id: webhooks
+    conforms: true
+    evidence: Documented HTTP webhook event catalog (asyncapi/billie-webhooks.yml).
+  - id: idempotency
+    conforms: false
+    evidence: No Idempotency-Key header documented.
+  - id: pagination
+    conforms: false
+    evidence: No cursor/offset pagination documented.

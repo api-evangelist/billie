@@ -1,0 +1,28 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.billie.io/reference/checkout-widget.md
+docs: https://docs.billie.io/reference/checkout-widget
+notes: >-
+  Billie ships a client-side embeddable checkout surface (the Billie widget /
+  "Checkout Client") that a merchant embeds in its checkout to collect buyer
+  consent, plus a fully hosted alternative (Hosted Payment Page). Distinct from
+  the server-side PHP SDK in packages/.
+components:
+  - family: checkout
+    name: Billie Checkout Widget (Checkout Client)
+    type: embedded-widget
+    description: >-
+      Front-end widget initialized from a checkout-session id that collects the
+      buyer's company details and consent, returning values used to confirm the
+      authorization server-side.
+    docs: https://docs.billie.io/reference/checkout-widget
+    init_via: create_checkout_session_v2 (session id)
+  - family: checkout
+    name: Billie Hosted Payment Page (HPP)
+    type: hosted-page
+    description: >-
+      Fully Billie-hosted payment page reached via a redirect URL (hpp_url);
+      the buyer authorizes on Billie's domain and is returned to accept/decline
+      URLs.
+    docs: https://docs.billie.io/reference/create_hpp_checkout_session_v2
+    init_via: create_hpp_checkout_session_v2 (session_id + hpp_url)

@@ -1,0 +1,9 @@
+# security.txt for Billie
+# For more information about this file format: https://securitytxt.org/
+Contact: mailto:disclosure@billie.io
+Encryption: https://billie.io/.well-known/openpgpkey/hu/g5gwkdcmobphsnqnboxbhu1edf98x87x
+Policy: https://billie.io/coordinated-vulnerability-disclosure-policy
+Preferred-Languages: en
+Canonical: https://billie.io/.well-known/security.txt
+Hiring: https://billie.io/careers
+Expires: 2026-12-31T23:59:00Z

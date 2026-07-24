@@ -1,0 +1,20 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.billie.io/reference/authentication.md
+notes: >-
+  Versioning is via URI path (/api/v2). Billie publishes a live status page
+  at status.billie.io. No public deprecation policy, Sunset/Deprecation
+  (RFC 8594) header contract, or SLA/uptime target document was found, so no
+  Deprecation pointer is emitted.
+versioning:
+  scheme: uri-path
+  current: v2
+  base_path: /api/v2
+deprecation:
+  policy_url: null
+  sunset_header: false
+sla:
+  url: null
+  uptime_target: null
+status_page: https://status.billie.io/
+deprecated_operations: []

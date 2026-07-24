@@ -1,0 +1,63 @@
+generated: '2026-07-18'
+method: derived
+status: candidate
+source: https://docs.billie.io/llms.txt
+notes: >-
+  No official hosted/remote Billie MCP server was found (no entry in the MCP
+  registry, no @modelcontextprotocol package, none referenced in Billie's
+  docs). This is a DERIVED candidate tool list, one tool per documented Payment
+  API v2 operation, so a follow-up can stand up an MCP server. operationIds are
+  the ReadMe reference slugs; a real spec would confirm exact ids.
+server:
+  name: billie
+  transport: http
+  url: null
+tools:
+  - name: request_oauth_token
+    description: Exchange client_credentials for a Bearer JWT.
+    source_operation: docs.billie.io/reference/oauth_token_create
+  - name: create_checkout_session
+    description: Create a checkout session to initialize the Billie widget.
+    source_operation: docs.billie.io/reference/create_checkout_session_v2
+  - name: create_hpp_checkout_session
+    description: Create a hosted-payment-page checkout session (session_id + hpp_url).
+    source_operation: docs.billie.io/reference/create_hpp_checkout_session_v2
+  - name: confirm_checkout_session
+    description: Confirm an authorization from the widget/HPP consent.
+    source_operation: docs.billie.io/reference/confirm_authorization_v2
+  - name: get_checkout_session_authorization
+    description: Return the last authorization for a checkout session.
+    source_operation: docs.billie.io/reference/get_checkout_session_authorization_v2
+  - name: create_order
+    description: Create an order directly from the backend without buyer interaction.
+    source_operation: docs.billie.io/reference/order_create_v2
+  - name: get_order
+    description: Retrieve full information about an order.
+    source_operation: docs.billie.io/reference/order_get_details_v2
+  - name: update_order
+    description: Update order external_code or lower the order amount before capture.
+    source_operation: docs.billie.io/reference/order_update_v2
+  - name: cancel_order
+    description: Cancel an entire order.
+    source_operation: docs.billie.io/reference/order_cancel_v2
+  - name: get_legal_forms
+    description: Retrieve valid legal-form codes.
+    source_operation: docs.billie.io/reference/get_legal_forms
+  - name: create_invoice
+    description: Capture (fully or partially) against an order.
+    source_operation: docs.billie.io/reference/invoice_create
+  - name: get_invoice
+    description: Retrieve full information about a capture.
+    source_operation: docs.billie.io/reference/get_invoice
+  - name: update_invoice
+    description: Provide invoice external_code / invoice_url for a capture.
+    source_operation: docs.billie.io/reference/invoice_update
+  - name: cancel_invoice
+    description: Refund the full amount of a past capture.
+    source_operation: docs.billie.io/reference/invoice_cancel_v2
+  - name: confirm_invoice_payment
+    description: Confirm the buyer paid a capture amount to the merchant directly.
+    source_operation: docs.billie.io/reference/invoice_payment_confirm
+  - name: create_credit_note
+    description: Refund (partial or full) against a previous capture.
+    source_operation: docs.billie.io/reference/create_credit_note
