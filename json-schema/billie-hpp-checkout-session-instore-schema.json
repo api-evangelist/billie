@@ -1,0 +1,380 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/billie/main/json-schema/billie-hpp-checkout-session-instore-schema.json",
+  "title": "Hpp Checkout Session Create Request",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/billie-direct-api-openapi.yml#/components/schemas/HppCheckoutSessionInstore",
+  "required": [
+    "channel",
+    "amount",
+    "duration",
+    "debtor_company",
+    "debtor_person",
+    "line_items"
+  ],
+  "properties": {
+    "channel": {
+      "type": "string",
+      "enum": [
+        "instore"
+      ]
+    },
+    "amount": {
+      "$ref": "#/$defs/AuthorizationAmount"
+    },
+    "comment": {
+      "$ref": "#/$defs/TinyText"
+    },
+    "duration": {
+      "$ref": "#/$defs/OrderDuration"
+    },
+    "order_id": {
+      "$ref": "#/$defs/TinyText"
+    },
+    "delivery_address": {
+      "$ref": "#/$defs/CreateOrderAddressRequest"
+    },
+    "billing_address": {
+      "$ref": "#/$defs/CreateOrderAddressRequest"
+    },
+    "debtor_company": {
+      "$ref": "#/$defs/LegacyCreateOrderDebtorCompanyRequest"
+    },
+    "debtor_person": {
+      "title": "Debtor Person",
+      "description": "Debtor Person desc",
+      "required": [
+        "email"
+      ],
+      "properties": {
+        "email": {
+          "$ref": "#/$defs/AuthorizationStrictEmail"
+        },
+        "salutation": {
+          "type": "string",
+          "maxLength": 1,
+          "enum": [
+            "m",
+            "f"
+          ]
+        },
+        "first_name": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "last_name": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "phone_number": {
+          "$ref": "#/$defs/AuthorizationPhoneNumber"
+        }
+      },
+      "type": "object"
+    },
+    "line_items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CreateOrderLineItemRequest"
+      }
+    },
+    "merchant_urls": {
+      "title": "object <accept_url, decline_url>",
+      "properties": {
+        "accept_url": {
+          "description": "Merchant URL the buyer will be redirected to after the purchase was successfully authorized.",
+          "type": "string",
+          "maximum": 255,
+          "minimum": 1
+        },
+        "decline_url": {
+          "description": "Merchant URL the buyer will be redirected to after the purchase was declined.",
+          "type": "string",
+          "maximum": 255,
+          "minimum": 1
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "$defs": {
+    "AmountDTO": {
+      "title": "object <net, gross, tax>",
+      "description": "The amount object with split values for net, gross and tax",
+      "required": [
+        "net",
+        "gross",
+        "tax"
+      ],
+      "properties": {
+        "gross": {
+          "description": "Value greater than 0, with max. 2 decimals. It should equal to net + tax.",
+          "type": "number",
+          "format": "float",
+          "minimum": 0.01
+        },
+        "net": {
+          "description": "Value greater than 0, with max. 2 decimals.",
+          "type": "number",
+          "format": "float",
+          "minimum": 0.01
+        },
+        "tax": {
+          "description": "Value greater than or equal to 0, with max. 2 decimals.",
+          "type": "number",
+          "format": "float",
+          "minimum": 0
+        }
+      },
+      "type": "object"
+    },
+    "AuthorizationAmount": {
+      "title": "object <net, gross, tax>",
+      "description": "The amount object with split values for net, gross and tax",
+      "required": [
+        "net",
+        "gross",
+        "tax"
+      ],
+      "properties": {
+        "gross": {
+          "description": "Value greater than 0, with max. 2 decimals. It should equal to net + tax.",
+          "type": "number",
+          "format": "float",
+          "minimum": 0.01
+        },
+        "net": {
+          "description": "Value greater than 0, with max. 2 decimals.",
+          "type": "number",
+          "format": "float",
+          "minimum": 0.01
+        },
+        "tax": {
+          "description": "Value greater than or equal to 0, with max. 2 decimals.",
+          "type": "number",
+          "format": "float",
+          "minimum": 0
+        }
+      },
+      "type": "object"
+    },
+    "AuthorizationPhoneNumber": {
+      "title": "PhoneNumber",
+      "type": "string",
+      "maxLength": 21,
+      "minLength": 5,
+      "pattern": "^(\\+|\\d|\\()[ \\-\\/0-9()]{5,20}$"
+    },
+    "AuthorizationStrictEmail": {
+      "title": "Email",
+      "description": "Email address with strict formatting rules",
+      "type": "string"
+    },
+    "CountryCode": {
+      "title": "Country Code",
+      "description": "ISO 3166-1 alpha-2 country code (two letters: DE, AT, etc.). See https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2",
+      "type": "string",
+      "maxLength": 2,
+      "minLength": 2
+    },
+    "CreateOrderAddressRequest": {
+      "title": "Address",
+      "required": [
+        "street",
+        "city",
+        "postal_code",
+        "country"
+      ],
+      "properties": {
+        "addition": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "house_number": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "street": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "city": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "postal_code": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "country": {
+          "$ref": "#/$defs/CountryCode"
+        },
+        "organization_name": {
+          "$ref": "#/$defs/TinyText"
+        }
+      },
+      "type": "object"
+    },
+    "CreateOrderLineItemRequest": {
+      "title": "Order Line Item",
+      "required": [
+        "external_id",
+        "title",
+        "quantity",
+        "amount"
+      ],
+      "properties": {
+        "external_id": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "title": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "description": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "number",
+          "minimum": 1
+        },
+        "category": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "brand": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "gtin": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "mpn": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "product_url": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "image_url": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "type": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "quantity_unit": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "tax_rate": {
+          "description": "Tax rate of the order line. Non-negative value. The percentage value is represented with two implicit decimals and two i.e. 1900 = 19%",
+          "type": "number",
+          "format": "float",
+          "minimum": 0
+        },
+        "total_discount_amount": {
+          "description": "Value greater than or equal to 0, with max. 2 decimals.",
+          "type": "number",
+          "format": "float",
+          "minimum": 0
+        },
+        "unit_price": {
+          "description": "Value greater than or equal to 0, with max. 2 decimals.",
+          "type": "number",
+          "format": "float",
+          "minimum": 0
+        },
+        "amount": {
+          "$ref": "#/$defs/AmountDTO"
+        }
+      },
+      "type": "object"
+    },
+    "LegacyCreateOrderDebtorCompanyRequest": {
+      "title": "Debtor Company",
+      "required": [
+        "merchant_customer_id",
+        "name",
+        "legal_form",
+        "address_street",
+        "address_city",
+        "address_postal_code",
+        "address_country"
+      ],
+      "properties": {
+        "merchant_customer_id": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "name": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "tax_id": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "tax_number": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "registration_court": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "registration_number": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "industry_sector": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "subindustry_sector": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "employees_number": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "legal_form": {
+          "$ref": "#/$defs/LegalForm"
+        },
+        "established_customer": {
+          "type": "boolean"
+        },
+        "address_addition": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "address_house_number": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "address_street": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "address_city": {
+          "$ref": "#/$defs/TinyText"
+        },
+        "address_postal_code": {
+          "$ref": "#/$defs/PostalCode"
+        },
+        "address_country": {
+          "$ref": "#/$defs/CountryCode"
+        },
+        "organisation_type": {
+          "type": "string",
+          "nullable": false
+        }
+      },
+      "type": "object"
+    },
+    "LegalForm": {
+      "title": "Legal Form",
+      "description": "One of the legal form codes available in the `GET /legal-forms` API endpoint.",
+      "type": "string"
+    },
+    "OrderDuration": {
+      "title": "Order Duration",
+      "type": "integer",
+      "maximum": 120,
+      "minimum": 1
+    },
+    "PostalCode": {
+      "title": "Postal Code",
+      "type": "string",
+      "maxLength": 5,
+      "minLength": 5,
+      "pattern": "^[0-9]{5}$"
+    },
+    "TinyText": {
+      "title": "string",
+      "type": "string",
+      "maxLength": 255
+    }
+  }
+}

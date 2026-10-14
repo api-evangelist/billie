@@ -1,0 +1,237 @@
+generated: '2026-10-14'
+method: derived
+generator: derive-vocabulary.py
+source: openapi/billie-direct-api-openapi.yml
+vocabulary:
+  name: Billie Domain Vocabulary
+  description: 'Terms declared by Billie''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-14'
+  terms:
+  - term: Authentication
+    definition: This API uses OAuth 2.0 for secure authentication. Different keys are used for the `sandbox` and `production` environments. Both
+      systems operate completely independent, however both show largely the same response behaviour. The major difference is that sandbox does
+      not trigger any payment events (payout to merchant, repayment by debtors, etc.). To obtain your credentials for both environments plea
+    tags:
+    - Resource Group
+    source: openapi/billie-direct-api-openapi.yml
+  - term: Front-end Order Creation
+    definition: '## To integrate the Billie checkout widget, the following steps are required: 1. Add the Billie checkout widget bundle to your
+      checkout page 2. Provide config data _(with the `session_id` from the server-side integration)_ 3. Provide order details and call the mount
+      method 4. Handle the widget responses This section provides a step-by-step guide of the setup process. ### 1. Include Billie Checkout'
+    tags:
+    - Resource Group
+    source: openapi/billie-direct-api-openapi.yml
+  - term: Request OAuth Token
+    definition: 'Object declared by the contract with fields: grant_type, client_id, client_secret.'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/OauthClientCredentialsGrantRequestBodyParams
+  - term: Request Oauth Token Response
+    definition: 'Object declared by the contract with fields: token_type, expires_in, access_token.'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/OauthTokenResponseBody
+  - term: API Errors
+    definition: 'Object declared by the contract with fields: errors.'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/ErrorsObject
+  - term: Order State
+    definition: 'Enumeration declared by the contract with values: pre_waiting, authorized, waiting, created, declined, shipped, partially_shipped,
+      complete, canceled.'
+    tags:
+    - Enumeration
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/OrderStateV2
+  - term: Order Decline Reason
+    definition: 'Enumeration declared by the contract with values: risk_policy, risk_scoring_failed, debtor_not_identified, debtor_address, risk_scoring_failed,
+      debtor_limit_exceeded.'
+    tags:
+    - Enumeration
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/OrderDeclineReason
+  - term: Country Code
+    definition: 'ISO 3166-1 alpha-2 country code (two letters: DE, AT, etc.). See https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/CountryCode
+  - term: Address data are all required except house number.
+    definition: 'Object declared by the contract with fields: house_number, street, postal_code, city, country.'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/Address
+  - term: Order Entity
+    definition: 'Object declared by the contract with fields: uuid, invoice_number, state, payout_amount, amount, amount_net, amount_tax, outstanding_amount,
+      pending_merchant_payment_amount, pending_cancellation_amount, fee_amount, fee_rate. (2 more)'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/OrderInvoiceResponse
+  - term: Simple representation of a bank account
+    definition: 'Object declared by the contract with fields: iban, bic.'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/BankAccount
+  - term: Order Debtor
+    definition: 'Object declared by the contract with fields: name, company_address, billing_address, bank_account, external_data.'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/Debtor
+  - term: Debtor External Data
+    definition: 'Object declared by the contract with fields: merchant_customer_id, name, industry_sector, address.'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/DebtorExternalData
+  - term: Order Entity
+    definition: 'Object declared by the contract with fields: external_code, uuid, state, decline_reason, amount, unshipped_amount, duration,
+      created_at, delivery_address, debtor, invoices, selected_payment_method. (1 more)'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/Order
+  - term: Payment Method Type
+    definition: 'Enumeration declared by the contract with values: bank_transfer, direct_debit.'
+    tags:
+    - Enumeration
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/PaymentMethodType
+  - term: Payment Method
+    definition: 'Object declared by the contract with fields: type, data.'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/PaymentMethod
+  - term: Amount with split values for net, gross and tax.
+    definition: 'Object declared by the contract with fields: gross, net, tax.'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/TaxedMoney
+  - term: Legal Form
+    definition: One of the legal form codes available in the `GET /legal-forms` API endpoint.
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/LegalForm
+  - term: object <net, gross, tax>
+    definition: The amount object with split values for net, gross and tax
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/AmountDTO
+  - term: Address
+    definition: 'Object declared by the contract with fields: addition, house_number, street, city, postal_code, country, organization_name.'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/CreateOrderAddressRequest
+  - term: Debtor Company
+    definition: 'Object declared by the contract with fields: merchant_customer_id, name, tax_id, tax_number, registration_court, registration_number,
+      industry_sector, subindustry_sector, employees_number, legal_form, established_customer, address_addition. (6 more)'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/LegacyCreateOrderDebtorCompanyRequest
+  - term: Order Line Item
+    definition: 'Object declared by the contract with fields: external_id, title, description, quantity, category, brand, gtin, mpn, product_url,
+      image_url, type, quantity_unit. (4 more)'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/CreateOrderLineItemRequest
+  - term: Hpp Checkout Session Create Request
+    definition: 'Object declared by the contract with fields: channel, amount, comment, duration, order_id, delivery_address, billing_address,
+      debtor_company, debtor_person, line_items, merchant_urls.'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/HppCheckoutSessionECommerce
+  - term: Hpp Checkout Session Create Request
+    definition: 'Object declared by the contract with fields: channel, amount, comment, duration, order_id, delivery_address, billing_address,
+      debtor_company, debtor_person, line_items, merchant_urls.'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/HppCheckoutSessionTelesales
+  - term: Hpp Checkout Session Create Request
+    definition: 'Object declared by the contract with fields: channel, amount, comment, duration, order_id, delivery_address, billing_address,
+      debtor_company, debtor_person, line_items, merchant_urls.'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/HppCheckoutSessionInstore
+  - term: object <net, gross, tax>
+    definition: The amount object with split values for net, gross and tax
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/AuthorizationAmount
+  - term: Email
+    definition: Email address with strict formatting rules
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/AuthorizationStrictEmail
+  - term: Order State
+    definition: 'Enumeration declared by the contract with values: pre_waiting, authorized, waiting, created, declined, shipped, paid_out, late,
+      complete, canceled.'
+    tags:
+    - Enumeration
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/OrderState
+  - term: Address data are all required except house number.
+    definition: 'Object declared by the contract with fields: house_number, street, postal_code, city, country.'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/AddressStrictPostalCode
+  - term: Debtor Company
+    definition: 'Object declared by the contract with fields: merchant_customer_id, name, company_address, billing_address, tax_id, tax_number,
+      registration_court, registration_number, industry_sector, subindustry_sector, employees_number, legal_form. (1 more)'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/CreateOrderDebtorCompanyRequest
+  - term: Order Creation Request
+    definition: 'Object declared by the contract with fields: amount, comment, duration, external_code, delivery_address, debtor, debtor_person,
+      line_items, additional_billing_emails.'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/CreateOrderRequest
+  - term: Debtor Person
+    definition: 'Object declared by the contract with fields: salutation, first_name, last_name, phone_number, email, locale.'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/CreateOrderDebtorPersonRequest
+  - term: Order Update with invoice Object
+    definition: 'Object declared by the contract with fields: amount, external_code.'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/UpdateOrderRequest
+  - term: Get Invoice Response
+    definition: Get Invoice Response
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/GetInvoiceResponse
+  - term: Shipping information for tracking, delivery, method.
+    definition: Shipping information for tracking, delivery, method.
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/ShippingInfo
+  - term: Line Item Request
+    definition: Line Item Request
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/LineItemsRequest
+  - term: Create Invoice Request
+    definition: 'Object declared by the contract with fields: orders, external_code, invoice_url, shipping_info, amount, line_items.'
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/CreateInvoiceRequest
+  - term: Invoice Update Request
+    definition: Invoice Update Request
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/UpdateInvoiceRequest
+  - term: Create Credit Note
+    definition: Create Credit Note
+    tags:
+    - Object
+    source: openapi/billie-direct-api-openapi.yml#/components/schemas/CreateCreditNoteRequest
+  - term: Captures
+    definition: 'Resource group in the contract; its operation POST /invoices: **Purpose:** Captures against an order.'
+    tags:
+    - Resource Group
+    source: openapi/billie-direct-api-openapi.yml
+  - term: Back-end Order Creation
+    definition: 'Resource group in the contract; its operation GET /legal-forms: **Purpose:** Retrieves a list of valid legal form codes in relation
+      to the legal for names.'
+    tags:
+    - Resource Group
+    source: openapi/billie-direct-api-openapi.yml
+  - term: Order Management
+    definition: 'Resource group in the contract; its operation GET /orders/{id}: **Purpose:** Retrieves full information about an order.'
+    tags:
+    - Resource Group
+    source: openapi/billie-direct-api-openapi.yml

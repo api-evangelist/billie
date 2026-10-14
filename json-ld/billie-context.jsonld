@@ -1,0 +1,464 @@
+{
+  "@context": {
+    "@vocab": "https://billie.io/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "billie": "https://billie.io/schema#",
+    "OauthClientCredentialsGrantRequestBodyParams": "billie:OauthClientCredentialsGrantRequestBodyParams",
+    "grant_type": {
+      "@id": "billie:grant_type",
+      "@type": "xsd:string"
+    },
+    "client_id": {
+      "@id": "billie:client_id",
+      "@type": "@id"
+    },
+    "client_secret": {
+      "@id": "billie:client_secret",
+      "@type": "xsd:string"
+    },
+    "OauthTokenResponseBody": "billie:OauthTokenResponseBody",
+    "token_type": {
+      "@id": "billie:token_type",
+      "@type": "xsd:string"
+    },
+    "expires_in": {
+      "@id": "billie:expires_in",
+      "@type": "xsd:integer"
+    },
+    "access_token": {
+      "@id": "billie:access_token",
+      "@type": "xsd:string"
+    },
+    "ErrorsObject": "billie:ErrorsObject",
+    "errors": {
+      "@id": "billie:errors",
+      "@container": "@list"
+    },
+    "OrderStateV2": "billie:OrderStateV2",
+    "OrderDeclineReason": "billie:OrderDeclineReason",
+    "Address": "billie:Address",
+    "house_number": {
+      "@id": "billie:house_number",
+      "@type": "@id"
+    },
+    "street": {
+      "@id": "billie:street",
+      "@type": "@id"
+    },
+    "postal_code": {
+      "@id": "billie:postal_code",
+      "@type": "@id"
+    },
+    "city": {
+      "@id": "billie:city",
+      "@type": "@id"
+    },
+    "country": {
+      "@id": "billie:country",
+      "@type": "@id"
+    },
+    "OrderInvoiceResponse": "billie:OrderInvoiceResponse",
+    "uuid": {
+      "@id": "billie:uuid",
+      "@type": "@id"
+    },
+    "invoice_number": {
+      "@id": "billie:invoice_number",
+      "@type": "xsd:string"
+    },
+    "state": {
+      "@id": "billie:state",
+      "@type": "xsd:string"
+    },
+    "payout_amount": {
+      "@id": "billie:payout_amount",
+      "@type": "xsd:decimal"
+    },
+    "amount": {
+      "@id": "billie:amount",
+      "@type": "xsd:decimal"
+    },
+    "amount_net": {
+      "@id": "billie:amount_net",
+      "@type": "xsd:decimal"
+    },
+    "amount_tax": {
+      "@id": "billie:amount_tax",
+      "@type": "xsd:decimal"
+    },
+    "outstanding_amount": {
+      "@id": "billie:outstanding_amount",
+      "@type": "xsd:decimal"
+    },
+    "pending_merchant_payment_amount": {
+      "@id": "billie:pending_merchant_payment_amount",
+      "@type": "xsd:decimal"
+    },
+    "pending_cancellation_amount": {
+      "@id": "billie:pending_cancellation_amount",
+      "@type": "xsd:decimal"
+    },
+    "fee_amount": {
+      "@id": "billie:fee_amount",
+      "@type": "xsd:decimal"
+    },
+    "fee_rate": {
+      "@id": "billie:fee_rate",
+      "@type": "xsd:decimal"
+    },
+    "due_date": {
+      "@id": "billie:due_date",
+      "@type": "xsd:date"
+    },
+    "created_at": {
+      "@id": "billie:created_at",
+      "@type": "xsd:date"
+    },
+    "BankAccount": "billie:BankAccount",
+    "iban": {
+      "@id": "billie:iban",
+      "@type": "@id"
+    },
+    "bic": {
+      "@id": "billie:bic",
+      "@type": "@id"
+    },
+    "Debtor": "billie:Debtor",
+    "name": {
+      "@id": "billie:name",
+      "@type": "xsd:string"
+    },
+    "company_address": {
+      "@id": "billie:company_address",
+      "@type": "@id"
+    },
+    "billing_address": {
+      "@id": "billie:billing_address",
+      "@type": "@id"
+    },
+    "bank_account": {
+      "@id": "billie:bank_account",
+      "@type": "@id"
+    },
+    "external_data": {
+      "@id": "billie:external_data",
+      "@type": "@id"
+    },
+    "DebtorExternalData": "billie:DebtorExternalData",
+    "merchant_customer_id": {
+      "@id": "billie:merchant_customer_id",
+      "@type": "@id"
+    },
+    "industry_sector": {
+      "@id": "billie:industry_sector",
+      "@type": "xsd:string"
+    },
+    "address": {
+      "@id": "billie:address",
+      "@type": "@id"
+    },
+    "Order": "billie:Order",
+    "external_code": {
+      "@id": "billie:external_code",
+      "@type": "xsd:string"
+    },
+    "decline_reason": {
+      "@id": "billie:decline_reason",
+      "@type": "@id"
+    },
+    "unshipped_amount": {
+      "@id": "billie:unshipped_amount",
+      "@type": "@id"
+    },
+    "duration": {
+      "@id": "billie:duration",
+      "@type": "@id"
+    },
+    "delivery_address": {
+      "@id": "billie:delivery_address",
+      "@type": "@id"
+    },
+    "debtor": {
+      "@id": "billie:debtor",
+      "@type": "@id"
+    },
+    "invoices": {
+      "@id": "billie:invoices",
+      "@container": "@list"
+    },
+    "selected_payment_method": {
+      "@id": "billie:selected_payment_method",
+      "@type": "xsd:string"
+    },
+    "payment_methods": {
+      "@id": "billie:payment_methods",
+      "@type": "@id"
+    },
+    "PaymentMethodType": "billie:PaymentMethodType",
+    "PaymentMethod": "billie:PaymentMethod",
+    "type": {
+      "@id": "billie:type",
+      "@type": "@id"
+    },
+    "data": {
+      "@id": "billie:data"
+    },
+    "TaxedMoney": "billie:TaxedMoney",
+    "gross": {
+      "@id": "billie:gross",
+      "@type": "xsd:decimal"
+    },
+    "net": {
+      "@id": "billie:net",
+      "@type": "xsd:decimal"
+    },
+    "tax": {
+      "@id": "billie:tax",
+      "@type": "xsd:decimal"
+    },
+    "AmountDTO": "billie:AmountDTO",
+    "CreateOrderAddressRequest": "billie:CreateOrderAddressRequest",
+    "addition": {
+      "@id": "billie:addition",
+      "@type": "@id"
+    },
+    "organization_name": {
+      "@id": "billie:organization_name",
+      "@type": "@id"
+    },
+    "LegacyCreateOrderDebtorCompanyRequest": "billie:LegacyCreateOrderDebtorCompanyRequest",
+    "tax_id": {
+      "@id": "billie:tax_id",
+      "@type": "@id"
+    },
+    "tax_number": {
+      "@id": "billie:tax_number",
+      "@type": "@id"
+    },
+    "registration_court": {
+      "@id": "billie:registration_court",
+      "@type": "@id"
+    },
+    "registration_number": {
+      "@id": "billie:registration_number",
+      "@type": "@id"
+    },
+    "subindustry_sector": {
+      "@id": "billie:subindustry_sector",
+      "@type": "@id"
+    },
+    "employees_number": {
+      "@id": "billie:employees_number",
+      "@type": "@id"
+    },
+    "legal_form": {
+      "@id": "billie:legal_form",
+      "@type": "@id"
+    },
+    "established_customer": {
+      "@id": "billie:established_customer",
+      "@type": "xsd:boolean"
+    },
+    "address_addition": {
+      "@id": "billie:address_addition",
+      "@type": "@id"
+    },
+    "address_house_number": {
+      "@id": "billie:address_house_number",
+      "@type": "@id"
+    },
+    "address_street": {
+      "@id": "billie:address_street",
+      "@type": "@id"
+    },
+    "address_city": {
+      "@id": "billie:address_city",
+      "@type": "@id"
+    },
+    "address_postal_code": {
+      "@id": "billie:address_postal_code",
+      "@type": "@id"
+    },
+    "address_country": {
+      "@id": "billie:address_country",
+      "@type": "@id"
+    },
+    "organisation_type": {
+      "@id": "billie:organisation_type",
+      "@type": "xsd:string"
+    },
+    "CreateOrderLineItemRequest": "billie:CreateOrderLineItemRequest",
+    "external_id": {
+      "@id": "billie:external_id",
+      "@type": "@id"
+    },
+    "title": {
+      "@id": "billie:title",
+      "@type": "@id"
+    },
+    "description": {
+      "@id": "billie:description",
+      "@type": "xsd:string"
+    },
+    "quantity": {
+      "@id": "billie:quantity",
+      "@type": "xsd:decimal"
+    },
+    "category": {
+      "@id": "billie:category",
+      "@type": "@id"
+    },
+    "brand": {
+      "@id": "billie:brand",
+      "@type": "@id"
+    },
+    "gtin": {
+      "@id": "billie:gtin",
+      "@type": "@id"
+    },
+    "mpn": {
+      "@id": "billie:mpn",
+      "@type": "@id"
+    },
+    "product_url": {
+      "@id": "billie:product_url",
+      "@type": "@id"
+    },
+    "image_url": {
+      "@id": "billie:image_url",
+      "@type": "@id"
+    },
+    "quantity_unit": {
+      "@id": "billie:quantity_unit",
+      "@type": "@id"
+    },
+    "tax_rate": {
+      "@id": "billie:tax_rate",
+      "@type": "xsd:decimal"
+    },
+    "total_discount_amount": {
+      "@id": "billie:total_discount_amount",
+      "@type": "xsd:decimal"
+    },
+    "unit_price": {
+      "@id": "billie:unit_price",
+      "@type": "xsd:decimal"
+    },
+    "HppCheckoutSessionECommerce": "billie:HppCheckoutSessionECommerce",
+    "channel": {
+      "@id": "billie:channel",
+      "@type": "xsd:string"
+    },
+    "comment": {
+      "@id": "billie:comment",
+      "@type": "@id"
+    },
+    "order_id": {
+      "@id": "billie:order_id",
+      "@type": "@id"
+    },
+    "debtor_company": {
+      "@id": "billie:debtor_company",
+      "@type": "@id"
+    },
+    "debtor_person": {
+      "@id": "billie:debtor_person"
+    },
+    "line_items": {
+      "@id": "billie:line_items",
+      "@container": "@list"
+    },
+    "merchant_urls": {
+      "@id": "billie:merchant_urls"
+    },
+    "HppCheckoutSessionTelesales": "billie:HppCheckoutSessionTelesales",
+    "HppCheckoutSessionInstore": "billie:HppCheckoutSessionInstore",
+    "AuthorizationAmount": "billie:AuthorizationAmount",
+    "OrderState": "billie:OrderState",
+    "AddressStrictPostalCode": "billie:AddressStrictPostalCode",
+    "CreateOrderDebtorCompanyRequest": "billie:CreateOrderDebtorCompanyRequest",
+    "CreateOrderRequest": "billie:CreateOrderRequest",
+    "additional_billing_emails": {
+      "@id": "billie:additional_billing_emails",
+      "@container": "@list"
+    },
+    "CreateOrderDebtorPersonRequest": "billie:CreateOrderDebtorPersonRequest",
+    "salutation": {
+      "@id": "billie:salutation",
+      "@type": "xsd:string"
+    },
+    "first_name": {
+      "@id": "billie:first_name",
+      "@type": "@id"
+    },
+    "last_name": {
+      "@id": "billie:last_name",
+      "@type": "@id"
+    },
+    "phone_number": {
+      "@id": "billie:phone_number",
+      "@type": "@id"
+    },
+    "email": {
+      "@id": "billie:email",
+      "@type": "xsd:string"
+    },
+    "locale": {
+      "@id": "billie:locale",
+      "@type": "xsd:string"
+    },
+    "UpdateOrderRequest": "billie:UpdateOrderRequest",
+    "GetInvoiceResponse": "billie:GetInvoiceResponse",
+    "ShippingInfo": "billie:ShippingInfo",
+    "return_shipping_company": {
+      "@id": "billie:return_shipping_company"
+    },
+    "return_tracking_number": {
+      "@id": "billie:return_tracking_number"
+    },
+    "return_tracking_url": {
+      "@id": "billie:return_tracking_url"
+    },
+    "shipping_company": {
+      "@id": "billie:shipping_company"
+    },
+    "shipping_method": {
+      "@id": "billie:shipping_method"
+    },
+    "tracking_number": {
+      "@id": "billie:tracking_number"
+    },
+    "tracking_url": {
+      "@id": "billie:tracking_url"
+    },
+    "LineItemsRequest": "billie:LineItemsRequest",
+    "amount_gross": {
+      "@id": "billie:amount_gross",
+      "@type": "xsd:decimal"
+    },
+    "CreateInvoiceRequest": "billie:CreateInvoiceRequest",
+    "orders": {
+      "@id": "billie:orders",
+      "@container": "@list"
+    },
+    "invoice_url": {
+      "@id": "billie:invoice_url",
+      "@type": "@id"
+    },
+    "shipping_info": {
+      "@id": "billie:shipping_info",
+      "@type": "@id"
+    },
+    "UpdateInvoiceRequest": "billie:UpdateInvoiceRequest",
+    "CreateCreditNoteRequest": "billie:CreateCreditNoteRequest"
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Billie API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Billie's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-14) from openapi/billie-direct-api-openapi.yml.",
+  "dcterms:created": "2026-10-14",
+  "dcterms:source": [
+    "openapi/billie-direct-api-openapi.yml"
+  ]
+}

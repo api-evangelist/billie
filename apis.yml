@@ -1,4 +1,5 @@
 aid: billie
+
 deliveryModel:
   model: saas
   open_source: false
@@ -10,6 +11,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: unknown
   onboarding: self-serve
@@ -22,33 +24,44 @@ accessModel:
   - authentication
   generated: '2026-07-22'
   method: derived
+
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/billie.png
+
 name: Billie
-description: >-
-  Billie is a Berlin-based B2B "buy now, pay later" (BNPL) payment provider that
-  lets merchants offer business buyers invoice purchase, pay-after-delivery, and
-  installment terms at checkout while Billie assumes the credit and fraud risk
-  and pays the merchant out. Its Payment API v2 (paella.billie.io) uses OAuth 2.0
-  client-credentials and covers checkout sessions, a hosted payment page, direct
-  backend order creation, order management, captures (invoicing), payment
-  confirmation, refunds/credit notes, and a webhook event surface. Billie also
-  ships an embeddable checkout widget, a PHP SDK, e-commerce plugins (Shopware,
-  Magento, WooCommerce, JTL), and partner routes via Klarna, Mollie, Adyen,
-  Stripe, and Kustom. Backed by Creandum and Speedinvest.
+
+description: Billie is a Berlin-based B2B "buy now, pay later" (BNPL) payment provider that lets merchants offer business buyers invoice purchase,
+  pay-after-delivery, and installment terms at checkout while Billie assumes the credit and fraud risk and pays the merchant out. Its Payment
+  API v2 (paella.billie.io) uses OAuth 2.0 client-credentials and covers checkout sessions, a hosted payment page, direct backend order creation,
+  order management, captures (invoicing), payment confirmation, refunds/credit notes, and a webhook event surface. Billie also ships an embeddable
+  checkout widget, a PHP SDK, e-commerce plugins (Shopware, Magento, WooCommerce, JTL), and partner routes via Klarna, Mollie, Adyen, Stripe,
+  and Kustom. Backed by Creandum and Speedinvest.
+
 url: https://raw.githubusercontent.com/api-evangelist/billie/refs/heads/main/apis.yml
+
 x-type: company
+
 x-source: vc-portfolio
+
 x-backed-by:
 - creandum
 - speedinvest
+
 x-tier: stub
+
 x-tier-reason: portfolio-lead
+
 specificationVersion: '0.23'
+
 created: '2026-07-17'
+
 modified: '2026-07-18'
+
 x-docs-platform: readme
+
 x-docs-platform-confidence: high
+
 x-docs-platform-checked: 2026-09-20
+
 tags:
 - Company
 - Fintech
@@ -58,6 +71,7 @@ tags:
 - Invoicing
 - Checkout
 - Germany
+
 tags_raw:
 - Company
 - Fintech
@@ -68,46 +82,28 @@ tags_raw:
 - Invoicing
 - Checkout
 - Germany
-apis:
-- name: Billie Payment API
-  description: >-
-    OAuth2 client-credentials REST API for B2B BNPL: checkout sessions, hosted
-    payment page, backend order creation, order management, captures (invoices),
-    payment confirmation, refunds/credit notes, and webhooks.
-  humanURL: https://docs.billie.io/reference/integration-checklist
-  baseURL: https://paella.billie.io/api/v2
-  properties:
-  - type: Documentation
-    url: https://docs.billie.io/
-  - type: APIReference
-    url: https://docs.billie.io/reference/integration-checklist
-  - type: Authentication
-    url: authentication/billie-authentication.yml
-  - type: Webhooks
-    url: asyncapi/billie-webhooks.yml
-  - type: Sandbox
-    url: sandbox/billie-sandbox.yml
-  - type: DeclineCodes
-    url: errors/billie-decline-codes.yml
-  - type: ErrorCatalog
-    url: errors/billie-problem-types.yml
-  - type: Conventions
-    url: conventions/billie-conventions.yml
-  - type: Lifecycle
-    url: lifecycle/billie-lifecycle.yml
-  - type: Conformance
-    url: conformance/billie-conformance.yml
-  - type: DataModel
-    url: data-model/billie-data-model.yml
-  - type: X-MCPServerCandidate
-    url: mcp/billie-mcp.yml
-    note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
+
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+
 common:
+- type: AgenticAccess
+  url: agentic-access/billie-agentic-access.yml
+- type: Spectral
+  url: rules/billie-rules.yml
+- type: JSONLD
+  url: json-ld/billie-context.jsonld
+- type: Vocabulary
+  url: vocabulary/billie-vocabulary.yml
+- type: Hosts
+  url: hosts/billie-hosts.yml
+- type: Vendors
+  url: vendors/billie-vendors.yml
+- type: OAuthScopes
+  url: scopes/billie-scopes.yml
 - type: VulnerabilityDisclosure
   url: security/billie-vulnerability-disclosure.yml
 - type: Security
@@ -136,7 +132,9 @@ common:
   url: asyncapi/billie-webhooks.yml
 - type: X-MCPServerCandidate
   url: mcp/billie-mcp.yml
-  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published
+    API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting
+    the artifact-type surfaces with a server that does not exist.'
 - type: AgentSkill
   url: skills/_index.yml
 - type: LLMsTxt
@@ -177,8 +175,65 @@ common:
   url: https://www.billie.io/datenschutz
 - type: Imprint
   url: https://www.billie.io/impressum
+
+apis:
+- name: Billie Payment API
+  description: 'OAuth2 client-credentials REST API for B2B BNPL: checkout sessions, hosted payment page, backend order creation, order management,
+    captures (invoices), payment confirmation, refunds/credit notes, and webhooks.'
+  humanURL: https://docs.billie.io/reference/integration-checklist
+  baseURL: https://paella.billie.io/api/v2
+  properties:
+  - url: openapi/billie-direct-api-openapi.yml
+    type: OpenAPI
+  - type: Documentation
+    url: https://docs.billie.io/
+  - type: APIReference
+    url: https://docs.billie.io/reference/integration-checklist
+  - type: Authentication
+    url: authentication/billie-authentication.yml
+  - type: Webhooks
+    url: asyncapi/billie-webhooks.yml
+  - type: Sandbox
+    url: sandbox/billie-sandbox.yml
+  - type: DeclineCodes
+    url: errors/billie-decline-codes.yml
+  - type: ErrorCatalog
+    url: errors/billie-problem-types.yml
+  - type: Conventions
+    url: conventions/billie-conventions.yml
+  - type: Lifecycle
+    url: lifecycle/billie-lifecycle.yml
+  - type: Conformance
+    url: conformance/billie-conformance.yml
+  - type: DataModel
+    url: data-model/billie-data-model.yml
+  - type: X-MCPServerCandidate
+    url: mcp/billie-mcp.yml
+    note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published
+      API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting
+      the artifact-type surfaces with a server that does not exist.'
+  - type: JSONSchema
+    url: json-schema/billie-hpp-checkout-session-ecommerce-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-hpp-checkout-session-telesales-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-hpp-checkout-session-instore-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-get-invoice-response-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-order-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-create-order-request-schema.json
+  aid: billie:billie-payment-api
+
 x-enrichment:
   date: '2026-07-19'
   status: backfilled
   pass: local-v1
   note: backfilled from .gitignore signal + verified work evidence
+
+x-readme-harvest:
+  date: '2026-10-14'
+  ops: 18
+  tool: harvest-readme-openapi.py
+  portal: https://docs.billie.io
