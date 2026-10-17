@@ -177,14 +177,35 @@ common:
   url: https://www.billie.io/impressum
 
 apis:
-- name: Billie Payment API
-  description: 'OAuth2 client-credentials REST API for B2B BNPL: checkout sessions, hosted payment page, backend order creation, order management,
-    captures (invoices), payment confirmation, refunds/credit notes, and webhooks.'
+- aid: billie:billie-authentication-api
+  name: Billie Authentication API
+  description: "This API uses OAuth 2.0 for secure authentication. \n\nDifferent keys are used for the\
+    \ `sandbox` and `production` environments. Both systems operate completely independent, however both\
+    \ show largely \nthe same response behaviour. The major difference is that sandbox does not trigger\
+    \ any payment events (payout to merchant, repayment \nby debtors, etc.). To obtain your credentials\
+    \ for both environments please contact Billie's merchant integration support \nvia telephone ( [+49-30-120872485](tel:+4930120872485)\
+    \ ) or email ( pad@billie.io ).\n\nThis authentication mechanism is based on the OAuth 2.0 protocol\
+    \ and requires a Client ID and a Client Secret Key (client credentials).\n\nBefore triggering any\
+    \ API call, a so called JSON web token (JWT) must be requested through the `oauth/token` endpoint\
+    \ described below\nby using your client credentials.\nIn all following requests / API calls, this\
+    \ JWT token is used for authorization and must be passed as type \"Bearer\" token \nin the Authorization\
+    \ header. Example: `Authorization: Bearer eyJhbGciOiJIUzI...`\n\nRenewal of the bearer token / JWT:\n\
+    \nEvery token expires automatically after 8 hours. After expiration of an existing token a new token\
+    \ must be requested through the \n`POST oauth/token` endpoint. Implementation best practice is to\
+    \ always try sending API calls first with the previously stored token. \nSending API calls with an\
+    \ expired token will be answered with an `HTTP 401` (Unauthorized request or invalid credentials)\
+    \ response.\n\nAfter receiving the `401` error you will simply need to request a new token by triggering\
+    \ again the `oauth/token` endpoint. \nAfter receiving the new valid token, resend the previously failed\
+    \ API call. This procedure allows for optimal API interaction, \nensures reduced system load on both\
+    \ ends, and is easy to implement as you don't need to keep track of token expiration times.\n\nThere\
+    \ is another endpoint available for checking if a token is still valid or not: `GET oauth/token`."
   humanURL: https://docs.billie.io/reference/integration-checklist
   baseURL: https://paella.billie.io/api/v2
+  tags:
+  - Authentication
   properties:
-  - url: openapi/billie-direct-api-openapi.yml
-    type: OpenAPI
+  - type: OpenAPI
+    url: openapi/billie-authentication-api-openapi.yml
   - type: Documentation
     url: https://docs.billie.io/
   - type: APIReference
@@ -209,9 +230,6 @@ apis:
     url: data-model/billie-data-model.yml
   - type: X-MCPServerCandidate
     url: mcp/billie-mcp.yml
-    note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published
-      API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting
-      the artifact-type surfaces with a server that does not exist.'
   - type: JSONSchema
     url: json-schema/billie-hpp-checkout-session-ecommerce-schema.json
   - type: JSONSchema
@@ -224,8 +242,288 @@ apis:
     url: json-schema/billie-order-schema.json
   - type: JSONSchema
     url: json-schema/billie-create-order-request-schema.json
-  aid: billie:billie-payment-api
-
+- aid: billie:billie-back-end-order-creation-api
+  name: Billie Back-end Order Creation API
+  description: >-
+    The Back-end Order Creation API from Billie — 2 operation(s) for back-end order creation.
+  humanURL: https://docs.billie.io/reference/integration-checklist
+  baseURL: https://paella.billie.io/api/v2
+  tags:
+  - Back-end Order Creation
+  properties:
+  - type: OpenAPI
+    url: openapi/billie-back-end-order-creation-api-openapi.yml
+  - type: Documentation
+    url: https://docs.billie.io/
+  - type: APIReference
+    url: https://docs.billie.io/reference/integration-checklist
+  - type: Authentication
+    url: authentication/billie-authentication.yml
+  - type: Webhooks
+    url: asyncapi/billie-webhooks.yml
+  - type: Sandbox
+    url: sandbox/billie-sandbox.yml
+  - type: DeclineCodes
+    url: errors/billie-decline-codes.yml
+  - type: ErrorCatalog
+    url: errors/billie-problem-types.yml
+  - type: Conventions
+    url: conventions/billie-conventions.yml
+  - type: Lifecycle
+    url: lifecycle/billie-lifecycle.yml
+  - type: Conformance
+    url: conformance/billie-conformance.yml
+  - type: DataModel
+    url: data-model/billie-data-model.yml
+  - type: X-MCPServerCandidate
+    url: mcp/billie-mcp.yml
+  - type: JSONSchema
+    url: json-schema/billie-hpp-checkout-session-ecommerce-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-hpp-checkout-session-telesales-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-hpp-checkout-session-instore-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-get-invoice-response-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-order-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-create-order-request-schema.json
+- aid: billie:billie-captures-api
+  name: Billie Captures API
+  description: The Captures API from Billie — 5 operation(s) for captures.
+  humanURL: https://docs.billie.io/reference/integration-checklist
+  baseURL: https://paella.billie.io/api/v2
+  tags:
+  - Captures
+  properties:
+  - type: OpenAPI
+    url: openapi/billie-captures-api-openapi.yml
+  - type: Documentation
+    url: https://docs.billie.io/
+  - type: APIReference
+    url: https://docs.billie.io/reference/integration-checklist
+  - type: Authentication
+    url: authentication/billie-authentication.yml
+  - type: Webhooks
+    url: asyncapi/billie-webhooks.yml
+  - type: Sandbox
+    url: sandbox/billie-sandbox.yml
+  - type: DeclineCodes
+    url: errors/billie-decline-codes.yml
+  - type: ErrorCatalog
+    url: errors/billie-problem-types.yml
+  - type: Conventions
+    url: conventions/billie-conventions.yml
+  - type: Lifecycle
+    url: lifecycle/billie-lifecycle.yml
+  - type: Conformance
+    url: conformance/billie-conformance.yml
+  - type: DataModel
+    url: data-model/billie-data-model.yml
+  - type: X-MCPServerCandidate
+    url: mcp/billie-mcp.yml
+  - type: JSONSchema
+    url: json-schema/billie-hpp-checkout-session-ecommerce-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-hpp-checkout-session-telesales-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-hpp-checkout-session-instore-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-get-invoice-response-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-order-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-create-order-request-schema.json
+- aid: billie:billie-front-end-order-creation-api
+  name: Billie Front-end Order Creation API
+  description: "## To integrate the Billie checkout widget, the following steps are required:\n\n1. Add\
+    \ the Billie checkout widget bundle to your checkout page\n2. Provide config data _(with the `session_id`\
+    \ from the server-side integration)_\n3. Provide order details and call the mount method\n4. Handle\
+    \ the widget responses\n\n<br>\n\n<strong>This section provides a step-by-step guide of the setup\
+    \ process.</strong>\n\n<br>\n\n### 1. Include Billie Checkout Widget Bundle into your Checkout Page\n\
+    \nOn the checkout page, the following code snippet must be included:\n\n```html\n<script>\nvar bcwSrc\
+    \ = 'https://static-paella-sandbox.billie.io/checkout/billie-checkout.js';\n(function(w,d,s,o,f,js,fjs){\n\
+    \    w['BillieCheckoutWidget']=o;w[o]=w[o]||function(){(w[o].q=w[o].q||[]).push(arguments)};\n   \
+    \ w.billieSrc=f;js=d.createElement(s);fjs=d.getElementsByTagName(s)[0];js.id=o;\n    js.src=f;js.charset='utf-8';js.async=1;fjs.parentNode.insertBefore(js,fjs);bcw('init');\n\
+    }(window,document,'script','bcw', bcwSrc));\n</script>\n```\n\nThe URL contained in `bcwSrc` specifies\
+    \ whether you are using the Sandbox or Production environment:\n\nSandbox: <https://static-paella-sandbox.billie.io/checkout/billie-checkout.js>\n\
+    \nProduction: <https://static.billie.io/checkout/billie-checkout.js>\n\nThe code snippet above injects\
+    \ our checkout script into the `head` of the webshop. This will download our widget bundle code and\
+    \ enable function calls to interact with the widget.\n\nIt is **strongly recommended** to add this\
+    \ code snippet as high as possible in the document head to ensure that the widget download completes\
+    \ as soon as possible, providing a smooth user experience.\n\n<br>\n\n### 2. Provide Config Data\n\
+    \nDuring initialization of the widget, the `session_id` is required. This can be obtained by calling\
+    \ [Checkout Session Create](#operation/checkout_session_create) from your backend and exposing it\
+    \ to the frontend. The `session_id` will be unique per order.\n\n```html\n<script>\nconst billie_config_data\
+    \ = {\n    'session_id': ':YOUR_SESSION_ID',\n    'merchant_name': ':YOUR_NAME'\n}\n</script>\n```\n\
+    \nThe `session_id` is needed to approve the order and should be known before mounting the widget.\n\
+    \nIdeally, if you are using server-side rendering, this piece of code should be inserted into the\
+    \ document head with prefilled values. Otherwise please ensure there is an [XHR request](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest)\
+    \ as early as possible to your backend to retrieve the `session_id`.\n\nFor a guideline how to present\
+    \ Billie as payment method please refer to the [Checkout Design Guide](https://docs.billie.io/reference/billie-payment-brand-guide).\n\
+    \n<br>\n\n### 3. Provide Order Details and Call Mount Method\n\nOnce the user reviews their checkout\
+    \ basket and is ready to pay, they can click on the **Pay with Billie** button. When this happens,\
+    \ Billie expects the `mount` method to be called. If you want to offer payments with direct debit\
+    \ you can pass an **optional** `billie_widget_options` object containing `payment_method`. The easiest\
+    \ integration option is to inline the function call directly on the button, for example:\n\n```html\n\
+    <script>\nfunction payWithBillie() {\n    // prepare / get all the data and assign it to billie_order_data,\
+    \ please refer to 3a section\n    BillieCheckoutWidget.mount({\n    billie_config_data: billie_config_data,\
+    \ \n    billie_order_data: billie_order_data,\n\n    // not required additional options, please refer\
+    \ to 3c section\n    billie_widget_options: {\n        payment_method: payment_method\n    }\n   \
+    \ })\n    .then(function success(ao) {\n    // code to execute when approved order\n    // console.log('Approved\
+    \ order', ao);\n    })\n    .catch(function failure(err) {\n    // code to execute when there is an\
+    \ error or when order is rejected\n    // console.log('Error occurred', err);\n    });\n}\n</script>\n\
+    <button onclick=\"payWithBillie()\"> Pay with Billie </button>\n```\n\n`BillieCheckoutWidget` is a\
+    \ JavaScript promise which can accept optional `then` and `catch` methods. They can be added if the\
+    \ webshop needs to perform an action based on the outcome of the order authorization.\n\nThe `then`\
+    \ block will receive as a parameter the object with the authorized order details.\n\nThe `catch` block\
+    \ will receive the error object with reasons why the order creation was rejected.\n\n#### 3.a Mount\
+    \ Method Parameters\n\n`BillieCheckoutWidget.mount` expects three parameters:\n\n- `billie_config_data`\
+    \ is the object received in step two which includes the `session_id` and `merchant_name`\n- `billie_order_data`\
+    \  is a collection of order data from the user\n- `billie_widget_options` **[optional]** is an object\
+    \ which includes `payment_method`\n\n#### 3.b Order Data Object\n\nThe order data object must contain\
+    \ all information about an order, in the following format (required values are marked with a \\*):\n\
+    \n- `amount` [object]\\*\n  - `gross` [float]\\* `> 0`\n  - `tax` [float]\\* `>= 0`\n  - `net` [float]\\\
+    * `> 0`\n- `duration` [integer]\\* `[7...120]`\n- `delivery_address` [object]\\*\n  - `street` [string]\\\
+    * `<= 255 characters`\n  - `house_number`  _[string]_ `<= 255 characters`\n  - `addition` _[string]_\
+    \ `<= 255 characters`\n  - `city` [string]\\* `<= 255 characters`\n  - `postal_code` [string]\\* \n\
+    \  - `country` [string]\\* `2 characters` `^[A-Za-z]{2}$`\n- `debtor_company` [object]\\*\n  - `name`\
+    \ [string]\\* `<= 255 characters`\n  - `established_customer` _[boolean]_ \n  - `address_street` [string]\\\
+    * `<= 255 characters`\n  - `address_house_number` [string]\\* `<= 255 characters`\n  - `address_addition`\
+    \ _[string]_  `<= 255 characters`\n  - `address_city` [string]\\* `<= 255 characters`\n  - `address_postal_code`\
+    \ [string]\\* `5 characters` `^[0-9]{5}$`\n  - `address_country` [string]\\* `2 characters` `^[A-Za-z]{2}$`\n\
+    - `debtor_person`  [object]\\*\n  - `salutation` [string] `1 character` `[\"m\" / \"f\"]`\n  - `first_name`\
+    \ _[string]_ `<= 255 characters`\n  - `last_name` _[string]_ `<= 255 characters`\n  - `phone_number`\
+    \ _[string]_ `>= 5 characters`, `<= 20 characters` `^(\\+|\\d|\\()[ \\-\\/0-9()]{5,20}$`\n  - `email`\
+    \ [string]\\* `<= 255 characters` `valid email`\n- `line_items` [array of objects]\\*\n  - `external_id`\
+    \ _[string]_ `<= 255 characters`\n  - `title` [string]\\* `<= 255 characters`\n  - `description` _[string]_\
+    \ `<= 255 characters`\n  - `quantity` [integer]\\* `>= 1`\n  - `category` _[string]_ `<= 255 characters`\n\
+    \  - `brand` _[string]_ `<= 255 characters`\n  - `gtin` _[string]_ `<= 255 characters`\n  - `mpn`\
+    \ _[string]_ `<= 255 characters`\n  - `amount` [object]\\*\n    - `gross` [float]\\* `> 0`\n    -\
+    \ `tax` [float]\\* `>= 0`\n    - `net` [float]\\* `> 0`\n\nBelow you can find an example of `orderData`\
+    \ object in javascript:\n\n```javascript\nconst billie_order_data = {\n\"amount\": { \"net\": 100,\
+    \ \"gross\": 100, \"tax\": 0 },\n\"comment\": \"string\",\n\"duration\": 30,\n\"delivery_address\"\
+    : {\n    \"house_number\": \"string\",\n    \"street\": \"string\",\n    \"city\": \"string\",\n \
+    \   \"postal_code\": \"10000\",\n    \"country\": \"DE\",\n    \"addition\": \"string\"\n},\n\"debtor_company\"\
+    : {\n    \"name\": \"string\",\n    \"established_customer\": false,\n    \"address_house_number\"\
+    : \"string\",\n    \"address_street\": \"string\",\n    \"address_city\": \"string\",\n    \"address_postal_code\"\
+    : \"10000\",\n    \"address_country\": \"DE\",\n    \"address_addition\": \"string\"\n},\n\"debtor_person\"\
+    : {\n    \"salutation\": \"m\",\n    \"first_name\": \"string\",\n    \"last_name\": \"string\",\n\
+    \    \"phone_number\": \"030 31199251\",\n    \"email\": \"james.smith@example.com\"\n},\n\"line_items\"\
+    : [\n    {\n    \"external_id\": \"string\",\n    \"title\": \"string\",\n    \"description\": \"\
+    string\",\n    \"quantity\": 1,\n    \"category\": \"string\",\n    \"brand\": \"string\",\n    \"\
+    gtin\": \"string\",\n    \"mpn\": \"string\",\n    \"amount\": { \"net\": 100, \"gross\": 100, \"\
+    tax\": 0 },\n    }\n    // , ...\n]\n};\n```\n\n#### 3.c Widget Options\n\nAn **optional** collection\
+    \ of additional options to pass to the widget\n\n- `payment_method` **[string]**  \n      Enum: `invoice`\
+    \ `direct_debit`  \n      Default: `invoice`\n\n<br>\n\n### 4. Handle Widget Responses\n\nWhen submitted,\
+    \ the checkout widget will evaluate if an order with the given data can be accepted. \n\n- If an order\
+    \ cannot be accepted, the widget will return the state `declined` with a specified `decline_reason`\n\
+    - If an order can be accepted immediately the widget will return the state `authorized`. \n- It is\
+    \ also possible that some additional checks need to be conducted by Billie in order to accept the\
+    \ order. In this case the widget will return the state `pre_waiting`. \n\nIn both `authorized` and\
+    \ `pre_waiting` states the `checkout-session-confirm` call must be used to confirm the order creation.\
+    \ \n\n#### Response\n\nAfter submitting the widget, following data will be returned to either `then`\
+    \ or `catch` block:\n\n- `state` **[string]** `<= 255 characters`  \n      Enum: `authorized` `declined`\
+    \ `pre_waiting`\n- `decline_reason` **[string]** `<= 255 characters`  \n      Enum: `validation_error`\
+    \ `risk_policy` `debtor_not_identified` `debtor_address` `risk_scoring_failed` `debtor_limit_exceeded`\
+    \ `unknown_error`\n- `validation_error_source` **[string]**  `<= 255 characters`\n- `debtor_company`\
+    \ **[object]**  \n- `name` **[string]** `<= 255 characters`\n- `address_street` **[string]** `<= 255\
+    \ characters`\n- `address_house_number` **[string]** `<= 255 characters`\n- `address_city` **[string]**\
+    \ `<= 255 characters`\n- `address_postal_code` **[string]** `5 characters` `^[0-9]{5}$`\n- `address_country`\
+    \ **[string]** `2 characters` `^[A-Za-z]{2}$`\n\n_**Special note**_  \n\n- `decline_reason` will be\
+    \ set only when `state` value is `declined`\n- `validation_error_source` will be set only when `decline_reason`\
+    \ value is `validation_error`. We will fill this property with information to help you find which\
+    \ fields are failing validation checks."
+  humanURL: https://docs.billie.io/reference/integration-checklist
+  baseURL: https://paella.billie.io/api/v2
+  tags:
+  - Front-end Order Creation
+  properties:
+  - type: OpenAPI
+    url: openapi/billie-front-end-order-creation-api-openapi.yml
+  - type: Documentation
+    url: https://docs.billie.io/
+  - type: APIReference
+    url: https://docs.billie.io/reference/integration-checklist
+  - type: Authentication
+    url: authentication/billie-authentication.yml
+  - type: Webhooks
+    url: asyncapi/billie-webhooks.yml
+  - type: Sandbox
+    url: sandbox/billie-sandbox.yml
+  - type: DeclineCodes
+    url: errors/billie-decline-codes.yml
+  - type: ErrorCatalog
+    url: errors/billie-problem-types.yml
+  - type: Conventions
+    url: conventions/billie-conventions.yml
+  - type: Lifecycle
+    url: lifecycle/billie-lifecycle.yml
+  - type: Conformance
+    url: conformance/billie-conformance.yml
+  - type: DataModel
+    url: data-model/billie-data-model.yml
+  - type: X-MCPServerCandidate
+    url: mcp/billie-mcp.yml
+  - type: JSONSchema
+    url: json-schema/billie-hpp-checkout-session-ecommerce-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-hpp-checkout-session-telesales-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-hpp-checkout-session-instore-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-get-invoice-response-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-order-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-create-order-request-schema.json
+- aid: billie:billie-order-management-api
+  name: Billie Order Management API
+  description: The Order Management API from Billie — 2 operation(s) for order management.
+  humanURL: https://docs.billie.io/reference/integration-checklist
+  baseURL: https://paella.billie.io/api/v2
+  tags:
+  - Order Management
+  properties:
+  - type: OpenAPI
+    url: openapi/billie-order-management-api-openapi.yml
+  - type: Documentation
+    url: https://docs.billie.io/
+  - type: APIReference
+    url: https://docs.billie.io/reference/integration-checklist
+  - type: Authentication
+    url: authentication/billie-authentication.yml
+  - type: Webhooks
+    url: asyncapi/billie-webhooks.yml
+  - type: Sandbox
+    url: sandbox/billie-sandbox.yml
+  - type: DeclineCodes
+    url: errors/billie-decline-codes.yml
+  - type: ErrorCatalog
+    url: errors/billie-problem-types.yml
+  - type: Conventions
+    url: conventions/billie-conventions.yml
+  - type: Lifecycle
+    url: lifecycle/billie-lifecycle.yml
+  - type: Conformance
+    url: conformance/billie-conformance.yml
+  - type: DataModel
+    url: data-model/billie-data-model.yml
+  - type: X-MCPServerCandidate
+    url: mcp/billie-mcp.yml
+  - type: JSONSchema
+    url: json-schema/billie-hpp-checkout-session-ecommerce-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-hpp-checkout-session-telesales-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-hpp-checkout-session-instore-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-get-invoice-response-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-order-schema.json
+  - type: JSONSchema
+    url: json-schema/billie-create-order-request-schema.json
 x-enrichment:
   date: '2026-07-19'
   status: backfilled

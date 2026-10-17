@@ -1,0 +1,728 @@
+openapi: 3.2.0
+info:
+  title: Billie Direct Back-end Order Creation API
+  description: '# Introduction
+
+
+    With PayAfterDelivery (PAD) / "Rechnungskauf" Billie offers a convenient, secure and simple way to allow your
+
+    B2B-customers to pay on invoice.'
+  termsOfService: https://www.billie.io/agb/
+  license:
+    name: © Billie GmbH, 2020
+    url: https://www.billie.io/agb/
+  version: v2025.11
+  x-logo:
+    url: data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIyLjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzJfS29waWUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIKCSB5PSIwcHgiIHZpZXdCb3g9IjAgMCA0OC41IDY3LjYiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQ4LjUgNjcuNjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtkaXNwbGF5Om5vbmU7ZmlsbDpub25lO3N0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDo3O3N0cm9rZS1taXRlcmxpbWl0OjEwO30KCS5zdDF7ZmlsbDojMUYyNTMwO30KCS5zdDJ7ZmlsbDpub25lO30KCS5zdDN7ZGlzcGxheTpub25lO2VuYWJsZS1iYWNrZ3JvdW5kOm5ldyAgICA7fQoJLnN0NHtmb250LWZhbWlseTonQXZlbmlyTmV4dC1EZW1pQm9sZCc7fQoJLnN0NXtmb250LXNpemU6My4wMzAzcHg7fQoJLnN0NntsZXR0ZXItc3BhY2luZzoyO30KPC9zdHlsZT4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTkuOCw0Ni4xYy0wLjUsMCwyNS4xLTEyLjYsMjUuMS0zMi43YzAtNi45LTUuNi0xMi42LTEyLjYtMTIuNlM5LjcsNi41LDkuNywxMy40TDkuOCw0Ni4xaDE4LjUKCWM2LjksMCwxMi42LTUuNiwxMi42LTEyLjZTMzUuMiwyMSwyOC4yLDIxSDkuNyIvPgo8Zz4KCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0yOC4yLDQ3SDguOHYtMC44YzAtMC4xLDAtMC4yLDAtMC4zVjEzLjVDOC44LDYsMTQuOSwwLDIyLjMsMHMxMy41LDYsMTMuNSwxMy41YzAsMi44LTAuNSw1LjUtMS40LDguMgoJCWM0LjMsMi4yLDcuMyw2LjcsNy4zLDExLjlDNDEuNyw0MSwzNS42LDQ3LDI4LjIsNDd6IE0xMi45LDQ1LjJoMTUuM2M2LjQsMCwxMS43LTUuMywxMS43LTExLjdjMC00LjQtMi41LTguMy02LjEtMTAuMwoJCWMtMS44LDQuNC00LjgsOC43LTksMTIuOEMyMC40LDQwLjQsMTUuOCw0My41LDEyLjksNDUuMnogTTEwLjYsMjEuOXYyMi43YzEzLTcuNywxOC45LTE1LjYsMjEuNS0yMmMtMS4yLTAuNC0yLjUtMC43LTMuOS0wLjdIMTAuNgoJCXogTTEwLjYsMjAuMWgxNy42YzEuNiwwLDMuMSwwLjMsNC41LDAuOGMxLTIuOSwxLjMtNS41LDEuMy03LjRDMzQsNywyOC44LDEuOCwyMi4zLDEuOFMxMC42LDcsMTAuNiwxMy41VjIwLjF6Ii8+CjwvZz4KPHJlY3QgeD0iLTExLjEiIHk9Ii01OC43IiBjbGFzcz0ic3QyIiB3aWR0aD0iODUuNCIgaGVpZ2h0PSI0OS41Ii8+Cjx0ZXh0IHRyYW5zZm9ybT0ibWF0cml4KDEgMCAwIDEgLTEuMDQyNCA2Ny41NzcyKSIgY2xhc3M9InN0MyBzdDQgc3Q1IHN0NiI+QklMTElFPC90ZXh0Pgo8Zz4KCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0wLDU4LjFoMy43YzAuNCwwLDAuNywwLjEsMS4xLDAuMWMwLjQsMC4xLDAuNywwLjIsMC45LDAuNGMwLjMsMC4yLDAuNSwwLjQsMC43LDAuN2MwLjIsMC4zLDAuMywwLjcsMC4zLDEuMQoJCWMwLDAuNS0wLjIsMS0wLjUsMS4zYy0wLjMsMC40LTAuNywwLjYtMS4yLDAuOHYwYzAuNiwwLjEsMS4xLDAuMywxLjUsMC43QzYuOCw2My42LDcsNjQuMiw3LDY0LjhjMCwwLjUtMC4xLDEtMC4zLDEuMwoJCWMtMC4yLDAuNC0wLjUsMC42LTAuOCwwLjljLTAuMywwLjItMC43LDAuNC0xLjIsMC41Yy0wLjQsMC4xLTAuOSwwLjItMS4zLDAuMkgwQzAsNjcuNiwwLDU4LjEsMCw1OC4xeiBNMS43LDYyaDEuNQoJCWMwLjYsMCwxLTAuMSwxLjMtMC4zYzAuMy0wLjIsMC40LTAuNSwwLjQtMWMwLTAuNC0wLjItMC43LTAuNS0wLjljLTAuMy0wLjItMC44LTAuMy0xLjQtMC4zSDEuN0wxLjcsNjJMMS43LDYyeiBNMS43LDY2LjFoMS41CgkJYzAuMiwwLDAuNSwwLDAuNy0wLjFzMC41LTAuMSwwLjctMC4yYzAuMi0wLjEsMC40LTAuMywwLjUtMC40YzAuMS0wLjIsMC4yLTAuNCwwLjItMC44YzAtMC41LTAuMi0wLjktMC41LTEKCQljLTAuMy0wLjItMC45LTAuMy0xLjUtMC4zSDEuN1Y2Ni4xeiIvPgoJPHBhdGggY2xhc3M9InN0MSIgZD0iTTExLjEsNTguMWgxLjd2OS41aC0xLjdWNTguMXoiLz4KCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0xNy4zLDU4LjFoMS43djhoNHYxLjVoLTUuN1Y1OC4xeiIvPgoJPHBhdGggY2xhc3M9InN0MSIgZD0iTTI2LjUsNTguMWgxLjd2OGg0djEuNWgtNS43TDI2LjUsNTguMUwyNi41LDU4LjF6Ii8+Cgk8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMzUuNyw1OC4xaDEuN3Y5LjVoLTEuN1Y1OC4xeiIvPgoJPHBhdGggY2xhc3M9InN0MSIgZD0iTTQxLjksNTguMWg2LjN2MS41aC00LjZWNjJINDh2MS40aC00LjNWNjZoNC44djEuNWgtNi41VjU4LjF6Ii8+CjwvZz4KPC9zdmc+Cg==
+    href: '#'
+servers:
+- url: https://paella-sandbox.billie.io/api/v2
+  description: Test Sandbox API
+- url: https://paella.billie.io/api/v2
+  description: Production API
+tags:
+- name: Back-end Order Creation
+paths:
+  /legal-forms:
+    get:
+      tags:
+      - Back-end Order Creation
+      summary: Get Legal Forms
+      description: '**Purpose:**
+
+
+        Retrieves a list of valid legal form codes in relation to the legal for names.
+
+
+        **Success:**
+
+
+        - Response Code: `HTTP 200`'
+      operationId: get_legal_forms
+      responses:
+        '200':
+          description: List of supported legal forms
+          content:
+            application/json:
+              schema:
+                properties:
+                  items:
+                    type: array
+                    items:
+                      properties:
+                        code:
+                          description: Legal form code
+                          type: integer
+                          example: '90101'
+                        name:
+                          description: Legal form name
+                          type:
+                          - string
+                          - 'null'
+                          example: AG & Co. KG
+                        required_input:
+                          description: Required input (HR-NR => Registration Number, Ust-ID => Registration ID)
+                          type: string
+                          example: HR-NR
+                        required:
+                          description: Required
+                          type: boolean
+                      type: object
+                type: object
+        '500':
+          $ref: '#/components/responses/ServerError'
+      security: []
+  /orders:
+    post:
+      tags:
+      - Back-end Order Creation
+      summary: Create Order
+      description: '**Purpose:**
+
+
+        Creates an order directly from the backend without buyer interaction.
+
+
+        **Preconditions:**
+
+
+        - All the order related data is present
+
+
+        **Success:**
+
+
+        - Response Code: `HTTP 200`
+
+        - Response body: `state` -> `created`
+
+        - Response body: `uuid` -> ID of the created order
+
+
+        **Attention:**
+
+
+        This call should be used when the buyer consent is received by another channel.'
+      operationId: order_create_v2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+      responses:
+        '200':
+          description: Order successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      security:
+      - oauth2: []
+components:
+  schemas:
+    CreateOrderLineItemRequest:
+      title: Order Line Item
+      required:
+      - external_id
+      - title
+      - quantity
+      - amount
+      properties:
+        external_id:
+          $ref: '#/components/schemas/TinyText'
+        title:
+          $ref: '#/components/schemas/TinyText'
+        description:
+          type: string
+        quantity:
+          type: number
+          minimum: 1
+        category:
+          $ref: '#/components/schemas/TinyText'
+        brand:
+          $ref: '#/components/schemas/TinyText'
+        gtin:
+          $ref: '#/components/schemas/TinyText'
+        mpn:
+          $ref: '#/components/schemas/TinyText'
+        product_url:
+          $ref: '#/components/schemas/TinyText'
+        image_url:
+          $ref: '#/components/schemas/TinyText'
+        type:
+          $ref: '#/components/schemas/TinyText'
+        quantity_unit:
+          $ref: '#/components/schemas/TinyText'
+        tax_rate:
+          description: Tax rate of the order line. Non-negative value. The percentage value is represented with two implicit decimals and two i.e. 1900 = 19%
+          type: number
+          format: float
+          minimum: 0
+        total_discount_amount:
+          description: Value greater than or equal to 0, with max. 2 decimals.
+          type: number
+          format: float
+          minimum: 0
+        unit_price:
+          description: Value greater than or equal to 0, with max. 2 decimals.
+          type: number
+          format: float
+          minimum: 0
+        amount:
+          $ref: '#/components/schemas/AmountDTO'
+      type: object
+    OrderDuration:
+      title: Order Duration
+      type: integer
+      maximum: 120
+      minimum: 1
+      example: 30
+    OrderInvoiceResponse:
+      title: Order Entity
+      properties:
+        uuid:
+          $ref: '#/components/schemas/UUID'
+        invoice_number:
+          type:
+          - string
+          - 'null'
+        state:
+          type:
+          - string
+          - 'null'
+        payout_amount:
+          type:
+          - number
+          - 'null'
+          format: float
+        amount:
+          type: number
+          format: float
+        amount_net:
+          type: number
+          format: float
+        amount_tax:
+          type: number
+          format: float
+        outstanding_amount:
+          type:
+          - number
+          - 'null'
+          format: float
+        pending_merchant_payment_amount:
+          type:
+          - number
+          - 'null'
+          format: float
+        pending_cancellation_amount:
+          type:
+          - number
+          - 'null'
+          format: float
+        fee_amount:
+          type:
+          - number
+          - 'null'
+          format: float
+        fee_rate:
+          type:
+          - number
+          - 'null'
+          format: float
+        due_date:
+          type: string
+          format: date
+          example: '2019-03-20'
+        created_at:
+          type: string
+          format: date
+          example: '2019-03-20'
+      type: object
+    TaxedMoney:
+      title: Amount with split values for net, gross and tax.
+      required:
+      - net
+      - gross
+      - tax
+      properties:
+        gross:
+          description: Value greater than 0, with max. 2 decimals. It should equal to net + tax.
+          type: number
+          format: float
+          minimum: 1
+          example: 260.27
+        net:
+          description: Value greater than 0, with max. 2 decimals.
+          type: number
+          format: float
+          minimum: 1
+          example: 200.12
+        tax:
+          description: Value greater than or equal to 0, with max. 2 decimals.
+          type: number
+          format: float
+          minimum: 0
+          example: 60.15
+      type: object
+    PaymentMethodCollection:
+      title: Eligible Payment Methods
+      type: array
+      items:
+        $ref: '#/components/schemas/PaymentMethod'
+    OrderDeclineReason:
+      title: Order Decline Reason
+      type: string
+      enum:
+      - risk_policy
+      - risk_scoring_failed
+      - debtor_not_identified
+      - debtor_address
+      - risk_scoring_failed
+      - debtor_limit_exceeded
+      example: debtor_not_identified
+    Order:
+      title: Order Entity
+      properties:
+        external_code:
+          type:
+          - string
+          - 'null'
+          example: C-10123456789-0001
+        uuid:
+          $ref: '#/components/schemas/UUID'
+        state:
+          $ref: '#/components/schemas/OrderStateV2'
+        decline_reason:
+          $ref: '#/components/schemas/OrderDeclineReason'
+        amount:
+          $ref: '#/components/schemas/TaxedMoney'
+        unshipped_amount:
+          $ref: '#/components/schemas/TaxedMoney'
+        duration:
+          $ref: '#/components/schemas/OrderDuration'
+        created_at:
+          $ref: '#/components/schemas/DateTime'
+        delivery_address:
+          $ref: '#/components/schemas/Address'
+        debtor:
+          $ref: '#/components/schemas/Debtor'
+        invoices:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderInvoiceResponse'
+        selected_payment_method:
+          type:
+          - string
+          - 'null'
+          enum:
+          - bank_transfer
+          - direct_debit
+          example: bank_transfer
+        payment_methods:
+          $ref: '#/components/schemas/PaymentMethodCollection'
+      type: object
+    LegalForm:
+      title: Legal Form
+      description: One of the legal form codes available in the `GET /legal-forms` API endpoint.
+      type: string
+      example: '10001'
+    Address:
+      title: Address data are all required except house number.
+      required:
+      - street
+      - postal_code
+      - city
+      - country
+      properties:
+        house_number:
+          $ref: '#/components/schemas/TinyText'
+        street:
+          $ref: '#/components/schemas/TinyText'
+        postal_code:
+          $ref: '#/components/schemas/TinyText'
+        city:
+          $ref: '#/components/schemas/TinyText'
+        country:
+          $ref: '#/components/schemas/CountryCode'
+      type: object
+    ErrorsObject:
+      title: API Errors
+      properties:
+        errors:
+          type: array
+          items:
+            required:
+            - title
+            - code
+            properties:
+              title:
+                description: Error message
+                type: string
+              code:
+                description: Error code
+                type:
+                - string
+                - 'null'
+              source:
+                description: Property path where the error occurred, if applicable
+                type:
+                - string
+                - 'null'
+            type: object
+      type: object
+    DateTime:
+      title: Date-Time
+      type: string
+      format: date-time
+      example: '2019-01-20 14:00:00'
+    PhoneNumber:
+      title: Phone Number
+      type: string
+      maxLength: 21
+      minLength: 5
+      pattern: ^(\+|\d|\()[ \-\/0-9()]{5,20}$
+      example: 030 31199251
+    DebtorExternalData:
+      title: Debtor External Data
+      properties:
+        merchant_customer_id:
+          $ref: '#/components/schemas/TinyText'
+        name:
+          $ref: '#/components/schemas/TinyText'
+        industry_sector:
+          type:
+          - string
+          - 'null'
+        address:
+          $ref: '#/components/schemas/Address'
+      type: object
+    Debtor:
+      title: Order Debtor
+      properties:
+        name:
+          type: string
+          example: C-10123456789-0001
+        company_address:
+          $ref: '#/components/schemas/Address'
+        billing_address:
+          $ref: '#/components/schemas/Address'
+        bank_account:
+          $ref: '#/components/schemas/BankAccount'
+        external_data:
+          $ref: '#/components/schemas/DebtorExternalData'
+      type: object
+    TinyText:
+      title: string
+      type: string
+      maxLength: 255
+    BankAccount:
+      title: Simple representation of a bank account
+      properties:
+        iban:
+          $ref: '#/components/schemas/TinyText'
+        bic:
+          $ref: '#/components/schemas/TinyText'
+      type: object
+    CreateOrderDebtorCompanyRequest:
+      title: Debtor Company
+      required:
+      - merchant_customer_id
+      - name
+      - legal_form
+      - company_address
+      properties:
+        merchant_customer_id:
+          $ref: '#/components/schemas/TinyText'
+        name:
+          $ref: '#/components/schemas/TinyText'
+        company_address:
+          $ref: '#/components/schemas/AddressStrictPostalCode'
+        billing_address:
+          $ref: '#/components/schemas/Address'
+        tax_id:
+          $ref: '#/components/schemas/TinyText'
+        tax_number:
+          $ref: '#/components/schemas/TinyText'
+        registration_court:
+          $ref: '#/components/schemas/TinyText'
+        registration_number:
+          $ref: '#/components/schemas/TinyText'
+        industry_sector:
+          $ref: '#/components/schemas/TinyText'
+        subindustry_sector:
+          $ref: '#/components/schemas/TinyText'
+        employees_number:
+          $ref: '#/components/schemas/TinyText'
+        legal_form:
+          $ref: '#/components/schemas/LegalForm'
+        established_customer:
+          type: boolean
+      type: object
+    PaymentMethodType:
+      title: Payment Method Type
+      type: string
+      enum:
+      - bank_transfer
+      - direct_debit
+      example: bank_transfer
+    CountryCode:
+      title: Country Code
+      description: 'ISO 3166-1 alpha-2 country code (two letters: DE, AT, etc.). See https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2'
+      type: string
+      maxLength: 2
+      minLength: 2
+      example: DE
+    PaymentMethod:
+      title: Payment Method
+      properties:
+        type:
+          $ref: '#/components/schemas/PaymentMethodType'
+        data:
+          description: Payment method details
+          properties:
+            iban:
+              $ref: '#/components/schemas/TinyText'
+            bic:
+              $ref: '#/components/schemas/TinyText'
+            bank_name:
+              description: Name of the Bank entity
+              type:
+              - string
+              - 'null'
+            bank_giro:
+              description: Bank giro number (Sweden only)
+              type:
+              - string
+              - 'null'
+            sort_code:
+              description: Bank sort code (GB only)
+              type:
+              - string
+              - 'null'
+            account_number:
+              description: Bank account number (GB, NL and NO)
+              type:
+              - string
+              - 'null'
+            bank_account_owner:
+              description: Bank account owner entity
+              type: string
+            mandate_reference:
+              description: Direct Debit SEPA Mandate Reference (for Direct Debit only)
+              type:
+              - string
+              - 'null'
+            mandate_execution_date:
+              $ref: '#/components/schemas/DateTime'
+            creditor_identification:
+              description: Creditor Identification Code (for Direct Debit only)
+              type:
+              - string
+              - 'null'
+          type: object
+      type: object
+    AddressStrictPostalCode:
+      title: Address data are all required except house number.
+      required:
+      - street
+      - postal_code
+      - city
+      - country
+      properties:
+        house_number:
+          $ref: '#/components/schemas/TinyText'
+        street:
+          $ref: '#/components/schemas/TinyText'
+        postal_code:
+          $ref: '#/components/schemas/PostalCode'
+        city:
+          $ref: '#/components/schemas/TinyText'
+        country:
+          $ref: '#/components/schemas/CountryCode'
+      type: object
+    PostalCode:
+      title: Postal Code
+      type: string
+      maxLength: 5
+      minLength: 5
+      pattern: ^[0-9]{5}$
+      example: '10969'
+    OrderStateV2:
+      title: Order State
+      type: string
+      enum:
+      - pre_waiting
+      - authorized
+      - waiting
+      - created
+      - declined
+      - shipped
+      - partially_shipped
+      - complete
+      - canceled
+      example: created
+    UUID:
+      type: string
+      format: uuid
+      maxLength: 36
+      minLength: 36
+      example: 12345667-890a-bcde-f123-34567890abcd
+    AmountDTO:
+      title: object <net, gross, tax>
+      description: The amount object with split values for net, gross and tax
+      required:
+      - net
+      - gross
+      - tax
+      properties:
+        gross:
+          description: Value greater than 0, with max. 2 decimals. It should equal to net + tax.
+          type: number
+          format: float
+          minimum: 0.01
+          example: 260.27
+        net:
+          description: Value greater than 0, with max. 2 decimals.
+          type: number
+          format: float
+          minimum: 0.01
+          example: 200.12
+        tax:
+          description: Value greater than or equal to 0, with max. 2 decimals.
+          type: number
+          format: float
+          minimum: 0
+          example: 60.15
+      type: object
+    CreateOrderDebtorPersonRequest:
+      title: Debtor Person
+      required:
+      - email
+      properties:
+        salutation:
+          type: string
+          maxLength: 1
+          enum:
+          - m
+          - f
+        first_name:
+          $ref: '#/components/schemas/TinyText'
+        last_name:
+          $ref: '#/components/schemas/TinyText'
+        phone_number:
+          $ref: '#/components/schemas/PhoneNumber'
+        email:
+          type: string
+          format: email
+          example: james.smith@example.com
+        locale:
+          type: string
+          example: de-DE
+      type: object
+    CreateOrderRequest:
+      title: Order Creation Request
+      required:
+      - amount
+      - duration
+      - debtor
+      - debtor_person
+      - line_items
+      properties:
+        amount:
+          $ref: '#/components/schemas/AmountDTO'
+        comment:
+          $ref: '#/components/schemas/TinyText'
+        duration:
+          $ref: '#/components/schemas/OrderDuration'
+        external_code:
+          $ref: '#/components/schemas/TinyText'
+        delivery_address:
+          $ref: '#/components/schemas/Address'
+        debtor:
+          $ref: '#/components/schemas/CreateOrderDebtorCompanyRequest'
+        debtor_person:
+          $ref: '#/components/schemas/CreateOrderDebtorPersonRequest'
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateOrderLineItemRequest'
+        additional_billing_emails:
+          type: array
+          items:
+            type: string
+          default: []
+      type: object
+  responses:
+    ServerError:
+      description: Unexpected Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorsObject'
+    Unauthorized:
+      description: Unauthorized request or invalid credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorsObject'
+    BadRequest:
+      description: Invalid Request Data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorsObject'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: 'This authentication mechanism is based on the OAuth 2.0 prototocol and requires a Client ID, a Client Secret Key and
+
+        in some cases also a user and password.
+
+
+        With these credentials, the client should request a token using the `POST /api/v1/oauth/token` endpoint,
+
+        which should be used in the `Authorization` header together with the `Bearer` challenge to authenticate all the requests.
+
+
+        > Example: `Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c`.'
+      flows:
+        password:
+          tokenUrl: /oauth/token
+          scopes:
+            default: default
+x-provenance:
+  method: searched
+  source: https://docs.billie.io/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.billie.io/reference/confirm_authorization_v2.md
+  - https://docs.billie.io/reference/create_checkout_session_v2.md
+  - https://docs.billie.io/reference/create_credit_note.md
+  - https://docs.billie.io/reference/create_hpp_checkout_session_v2.md
+  - https://docs.billie.io/reference/get_checkout_session_authorization_v2.md
+  - https://docs.billie.io/reference/get_invoice.md
+  - https://docs.billie.io/reference/get_legal_forms.md
+  - https://docs.billie.io/reference/invoice_cancel_v2.md
+  - https://docs.billie.io/reference/invoice_create.md
+  - https://docs.billie.io/reference/invoice_payment_confirm.md
+  - https://docs.billie.io/reference/invoice_update.md
+  - https://docs.billie.io/reference/oauth_token_create.md
+  - https://docs.billie.io/reference/oauth_token_revoke.md
+  - https://docs.billie.io/reference/oauth_token_validate.md
+  - https://docs.billie.io/reference/order_cancel_v2.md
+  - https://docs.billie.io/reference/order_create_v2.md
+  - https://docs.billie.io/reference/order_get_details_v2.md
+  - https://docs.billie.io/reference/order_update_v2.md
+  merge:
+    pages: 18
+    deduped: 152
+    conflicts_kept_first: 0

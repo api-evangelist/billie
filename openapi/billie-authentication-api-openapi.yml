@@ -1,0 +1,256 @@
+openapi: 3.2.0
+info:
+  title: Billie Direct Authentication API
+  description: '# Introduction
+
+
+    With PayAfterDelivery (PAD) / "Rechnungskauf" Billie offers a convenient, secure and simple way to allow your
+
+    B2B-customers to pay on invoice.'
+  termsOfService: https://www.billie.io/agb/
+  license:
+    name: © Billie GmbH, 2020
+    url: https://www.billie.io/agb/
+  version: v2025.11
+  x-logo:
+    url: data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIyLjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzJfS29waWUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIKCSB5PSIwcHgiIHZpZXdCb3g9IjAgMCA0OC41IDY3LjYiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQ4LjUgNjcuNjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtkaXNwbGF5Om5vbmU7ZmlsbDpub25lO3N0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDo3O3N0cm9rZS1taXRlcmxpbWl0OjEwO30KCS5zdDF7ZmlsbDojMUYyNTMwO30KCS5zdDJ7ZmlsbDpub25lO30KCS5zdDN7ZGlzcGxheTpub25lO2VuYWJsZS1iYWNrZ3JvdW5kOm5ldyAgICA7fQoJLnN0NHtmb250LWZhbWlseTonQXZlbmlyTmV4dC1EZW1pQm9sZCc7fQoJLnN0NXtmb250LXNpemU6My4wMzAzcHg7fQoJLnN0NntsZXR0ZXItc3BhY2luZzoyO30KPC9zdHlsZT4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTkuOCw0Ni4xYy0wLjUsMCwyNS4xLTEyLjYsMjUuMS0zMi43YzAtNi45LTUuNi0xMi42LTEyLjYtMTIuNlM5LjcsNi41LDkuNywxMy40TDkuOCw0Ni4xaDE4LjUKCWM2LjksMCwxMi42LTUuNiwxMi42LTEyLjZTMzUuMiwyMSwyOC4yLDIxSDkuNyIvPgo8Zz4KCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0yOC4yLDQ3SDguOHYtMC44YzAtMC4xLDAtMC4yLDAtMC4zVjEzLjVDOC44LDYsMTQuOSwwLDIyLjMsMHMxMy41LDYsMTMuNSwxMy41YzAsMi44LTAuNSw1LjUtMS40LDguMgoJCWM0LjMsMi4yLDcuMyw2LjcsNy4zLDExLjlDNDEuNyw0MSwzNS42LDQ3LDI4LjIsNDd6IE0xMi45LDQ1LjJoMTUuM2M2LjQsMCwxMS43LTUuMywxMS43LTExLjdjMC00LjQtMi41LTguMy02LjEtMTAuMwoJCWMtMS44LDQuNC00LjgsOC43LTksMTIuOEMyMC40LDQwLjQsMTUuOCw0My41LDEyLjksNDUuMnogTTEwLjYsMjEuOXYyMi43YzEzLTcuNywxOC45LTE1LjYsMjEuNS0yMmMtMS4yLTAuNC0yLjUtMC43LTMuOS0wLjdIMTAuNgoJCXogTTEwLjYsMjAuMWgxNy42YzEuNiwwLDMuMSwwLjMsNC41LDAuOGMxLTIuOSwxLjMtNS41LDEuMy03LjRDMzQsNywyOC44LDEuOCwyMi4zLDEuOFMxMC42LDcsMTAuNiwxMy41VjIwLjF6Ii8+CjwvZz4KPHJlY3QgeD0iLTExLjEiIHk9Ii01OC43IiBjbGFzcz0ic3QyIiB3aWR0aD0iODUuNCIgaGVpZ2h0PSI0OS41Ii8+Cjx0ZXh0IHRyYW5zZm9ybT0ibWF0cml4KDEgMCAwIDEgLTEuMDQyNCA2Ny41NzcyKSIgY2xhc3M9InN0MyBzdDQgc3Q1IHN0NiI+QklMTElFPC90ZXh0Pgo8Zz4KCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0wLDU4LjFoMy43YzAuNCwwLDAuNywwLjEsMS4xLDAuMWMwLjQsMC4xLDAuNywwLjIsMC45LDAuNGMwLjMsMC4yLDAuNSwwLjQsMC43LDAuN2MwLjIsMC4zLDAuMywwLjcsMC4zLDEuMQoJCWMwLDAuNS0wLjIsMS0wLjUsMS4zYy0wLjMsMC40LTAuNywwLjYtMS4yLDAuOHYwYzAuNiwwLjEsMS4xLDAuMywxLjUsMC43QzYuOCw2My42LDcsNjQuMiw3LDY0LjhjMCwwLjUtMC4xLDEtMC4zLDEuMwoJCWMtMC4yLDAuNC0wLjUsMC42LTAuOCwwLjljLTAuMywwLjItMC43LDAuNC0xLjIsMC41Yy0wLjQsMC4xLTAuOSwwLjItMS4zLDAuMkgwQzAsNjcuNiwwLDU4LjEsMCw1OC4xeiBNMS43LDYyaDEuNQoJCWMwLjYsMCwxLTAuMSwxLjMtMC4zYzAuMy0wLjIsMC40LTAuNSwwLjQtMWMwLTAuNC0wLjItMC43LTAuNS0wLjljLTAuMy0wLjItMC44LTAuMy0xLjQtMC4zSDEuN0wxLjcsNjJMMS43LDYyeiBNMS43LDY2LjFoMS41CgkJYzAuMiwwLDAuNSwwLDAuNy0wLjFzMC41LTAuMSwwLjctMC4yYzAuMi0wLjEsMC40LTAuMywwLjUtMC40YzAuMS0wLjIsMC4yLTAuNCwwLjItMC44YzAtMC41LTAuMi0wLjktMC41LTEKCQljLTAuMy0wLjItMC45LTAuMy0xLjUtMC4zSDEuN1Y2Ni4xeiIvPgoJPHBhdGggY2xhc3M9InN0MSIgZD0iTTExLjEsNTguMWgxLjd2OS41aC0xLjdWNTguMXoiLz4KCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0xNy4zLDU4LjFoMS43djhoNHYxLjVoLTUuN1Y1OC4xeiIvPgoJPHBhdGggY2xhc3M9InN0MSIgZD0iTTI2LjUsNTguMWgxLjd2OGg0djEuNWgtNS43TDI2LjUsNTguMUwyNi41LDU4LjF6Ii8+Cgk8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMzUuNyw1OC4xaDEuN3Y5LjVoLTEuN1Y1OC4xeiIvPgoJPHBhdGggY2xhc3M9InN0MSIgZD0iTTQxLjksNTguMWg2LjN2MS41aC00LjZWNjJINDh2MS40aC00LjNWNjZoNC44djEuNWgtNi41VjU4LjF6Ii8+CjwvZz4KPC9zdmc+Cg==
+    href: '#'
+servers:
+- url: https://paella-sandbox.billie.io/api/v2
+  description: Test Sandbox API
+- url: https://paella.billie.io/api/v2
+  description: Production API
+tags:
+- name: Authentication
+  description: This API uses OAuth 2.0 for secure authentication.
+paths:
+  /oauth/authorization:
+    get:
+      tags:
+      - Authentication
+      summary: Validate OAuth Token
+      description: 'Validates the `Authorization: Bearer XXXX` OAuth 2.0 token header and returns a successful response
+
+        with `client_id` and `user_id` or fails if it''s invalid.'
+      operationId: oauth_token_validate
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                required:
+                - client_id
+                - scopes
+                properties:
+                  client_id:
+                    $ref: '#/components/schemas/UUID'
+                  scopes:
+                    type: array
+                    items:
+                      type: string
+                    default: []
+                type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/ServerError'
+  /oauth/token:
+    post:
+      tags:
+      - Authentication
+      summary: Request OAuth Token
+      description: '### Flow
+
+
+        The client sends a POST request with following body parameters to the authorization server:
+
+
+        * `grant_type` with the value `client_credentials`
+
+        * `client_id` with the client''s ID
+
+        * `client_secret` with the client''s secret
+
+
+        The authorization server will respond with a JSON object containing the following properties:
+
+
+        * `token_type` with the value `Bearer`
+
+        * `expires_in` with an integer representing the TTL (in seconds) of the access token (Default is 8 hours)
+
+        * `access_token` a JWT signed with the authorization server''s private key
+
+
+        The `access_token` should be used in the `Authorization` header together with the `Bearer` challenge to authenticate all the requests.
+
+
+        > Example: `Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c`.'
+      operationId: oauth_token_create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OauthClientCredentialsGrantRequestBodyParams'
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OauthTokenResponseBody'
+  /oauth/token/revoke:
+    post:
+      tags:
+      - Authentication
+      summary: Revoke OAuth Token
+      description: 'Revokes the oAuth token using the token from the `Authorization: Bearer XXXX` header and returns a 204 response'
+      operationId: oauth_token_revoke
+      parameters:
+      - name: authorization
+        in: header
+        description: Authorization Header with Token
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/ServerError'
+components:
+  schemas:
+    OauthTokenResponseBody:
+      title: Request Oauth Token Response
+      properties:
+        token_type:
+          type: string
+          example: Bearer
+        expires_in:
+          description: TTL of the access token in seconds (Default is 8 hours)
+          type: integer
+        access_token:
+          description: JWT signed with the authorization server's private key
+          type: string
+      type: object
+    OauthClientCredentialsGrantRequestBodyParams:
+      title: Request OAuth Token
+      required:
+      - grant_type
+      - client_id
+      - client_secret
+      properties:
+        grant_type:
+          type: string
+          example: client_credentials
+        client_id:
+          $ref: '#/components/schemas/UUID'
+        client_secret:
+          type: string
+      type: object
+    UUID:
+      type: string
+      format: uuid
+      maxLength: 36
+      minLength: 36
+      example: 12345667-890a-bcde-f123-34567890abcd
+    ErrorsObject:
+      title: API Errors
+      properties:
+        errors:
+          type: array
+          items:
+            required:
+            - title
+            - code
+            properties:
+              title:
+                description: Error message
+                type: string
+              code:
+                description: Error code
+                type:
+                - string
+                - 'null'
+              source:
+                description: Property path where the error occurred, if applicable
+                type:
+                - string
+                - 'null'
+            type: object
+      type: object
+  responses:
+    Forbidden:
+      description: Forbidden Request. The operation cannot be completed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorsObject'
+    ServerError:
+      description: Unexpected Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorsObject'
+    Unauthorized:
+      description: Unauthorized request or invalid credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorsObject'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: 'This authentication mechanism is based on the OAuth 2.0 prototocol and requires a Client ID, a Client Secret Key and
+
+        in some cases also a user and password.
+
+
+        With these credentials, the client should request a token using the `POST /api/v1/oauth/token` endpoint,
+
+        which should be used in the `Authorization` header together with the `Bearer` challenge to authenticate all the requests.
+
+
+        > Example: `Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c`.'
+      flows:
+        password:
+          tokenUrl: /oauth/token
+          scopes:
+            default: default
+x-provenance:
+  method: searched
+  source: https://docs.billie.io/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.billie.io/reference/confirm_authorization_v2.md
+  - https://docs.billie.io/reference/create_checkout_session_v2.md
+  - https://docs.billie.io/reference/create_credit_note.md
+  - https://docs.billie.io/reference/create_hpp_checkout_session_v2.md
+  - https://docs.billie.io/reference/get_checkout_session_authorization_v2.md
+  - https://docs.billie.io/reference/get_invoice.md
+  - https://docs.billie.io/reference/get_legal_forms.md
+  - https://docs.billie.io/reference/invoice_cancel_v2.md
+  - https://docs.billie.io/reference/invoice_create.md
+  - https://docs.billie.io/reference/invoice_payment_confirm.md
+  - https://docs.billie.io/reference/invoice_update.md
+  - https://docs.billie.io/reference/oauth_token_create.md
+  - https://docs.billie.io/reference/oauth_token_revoke.md
+  - https://docs.billie.io/reference/oauth_token_validate.md
+  - https://docs.billie.io/reference/order_cancel_v2.md
+  - https://docs.billie.io/reference/order_create_v2.md
+  - https://docs.billie.io/reference/order_get_details_v2.md
+  - https://docs.billie.io/reference/order_update_v2.md
+  merge:
+    pages: 18
+    deduped: 152
+    conflicts_kept_first: 0

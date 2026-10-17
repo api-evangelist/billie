@@ -1,0 +1,788 @@
+openapi: 3.2.0
+info:
+  title: Billie Direct Captures API
+  description: '# Introduction
+
+
+    With PayAfterDelivery (PAD) / "Rechnungskauf" Billie offers a convenient, secure and simple way to allow your
+
+    B2B-customers to pay on invoice.'
+  termsOfService: https://www.billie.io/agb/
+  license:
+    name: © Billie GmbH, 2020
+    url: https://www.billie.io/agb/
+  version: v2025.11
+  x-logo:
+    url: data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIyLjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkViZW5lXzJfS29waWUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIKCSB5PSIwcHgiIHZpZXdCb3g9IjAgMCA0OC41IDY3LjYiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQ4LjUgNjcuNjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHtkaXNwbGF5Om5vbmU7ZmlsbDpub25lO3N0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDo3O3N0cm9rZS1taXRlcmxpbWl0OjEwO30KCS5zdDF7ZmlsbDojMUYyNTMwO30KCS5zdDJ7ZmlsbDpub25lO30KCS5zdDN7ZGlzcGxheTpub25lO2VuYWJsZS1iYWNrZ3JvdW5kOm5ldyAgICA7fQoJLnN0NHtmb250LWZhbWlseTonQXZlbmlyTmV4dC1EZW1pQm9sZCc7fQoJLnN0NXtmb250LXNpemU6My4wMzAzcHg7fQoJLnN0NntsZXR0ZXItc3BhY2luZzoyO30KPC9zdHlsZT4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTkuOCw0Ni4xYy0wLjUsMCwyNS4xLTEyLjYsMjUuMS0zMi43YzAtNi45LTUuNi0xMi42LTEyLjYtMTIuNlM5LjcsNi41LDkuNywxMy40TDkuOCw0Ni4xaDE4LjUKCWM2LjksMCwxMi42LTUuNiwxMi42LTEyLjZTMzUuMiwyMSwyOC4yLDIxSDkuNyIvPgo8Zz4KCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0yOC4yLDQ3SDguOHYtMC44YzAtMC4xLDAtMC4yLDAtMC4zVjEzLjVDOC44LDYsMTQuOSwwLDIyLjMsMHMxMy41LDYsMTMuNSwxMy41YzAsMi44LTAuNSw1LjUtMS40LDguMgoJCWM0LjMsMi4yLDcuMyw2LjcsNy4zLDExLjlDNDEuNyw0MSwzNS42LDQ3LDI4LjIsNDd6IE0xMi45LDQ1LjJoMTUuM2M2LjQsMCwxMS43LTUuMywxMS43LTExLjdjMC00LjQtMi41LTguMy02LjEtMTAuMwoJCWMtMS44LDQuNC00LjgsOC43LTksMTIuOEMyMC40LDQwLjQsMTUuOCw0My41LDEyLjksNDUuMnogTTEwLjYsMjEuOXYyMi43YzEzLTcuNywxOC45LTE1LjYsMjEuNS0yMmMtMS4yLTAuNC0yLjUtMC43LTMuOS0wLjdIMTAuNgoJCXogTTEwLjYsMjAuMWgxNy42YzEuNiwwLDMuMSwwLjMsNC41LDAuOGMxLTIuOSwxLjMtNS41LDEuMy03LjRDMzQsNywyOC44LDEuOCwyMi4zLDEuOFMxMC42LDcsMTAuNiwxMy41VjIwLjF6Ii8+CjwvZz4KPHJlY3QgeD0iLTExLjEiIHk9Ii01OC43IiBjbGFzcz0ic3QyIiB3aWR0aD0iODUuNCIgaGVpZ2h0PSI0OS41Ii8+Cjx0ZXh0IHRyYW5zZm9ybT0ibWF0cml4KDEgMCAwIDEgLTEuMDQyNCA2Ny41NzcyKSIgY2xhc3M9InN0MyBzdDQgc3Q1IHN0NiI+QklMTElFPC90ZXh0Pgo8Zz4KCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0wLDU4LjFoMy43YzAuNCwwLDAuNywwLjEsMS4xLDAuMWMwLjQsMC4xLDAuNywwLjIsMC45LDAuNGMwLjMsMC4yLDAuNSwwLjQsMC43LDAuN2MwLjIsMC4zLDAuMywwLjcsMC4zLDEuMQoJCWMwLDAuNS0wLjIsMS0wLjUsMS4zYy0wLjMsMC40LTAuNywwLjYtMS4yLDAuOHYwYzAuNiwwLjEsMS4xLDAuMywxLjUsMC43QzYuOCw2My42LDcsNjQuMiw3LDY0LjhjMCwwLjUtMC4xLDEtMC4zLDEuMwoJCWMtMC4yLDAuNC0wLjUsMC42LTAuOCwwLjljLTAuMywwLjItMC43LDAuNC0xLjIsMC41Yy0wLjQsMC4xLTAuOSwwLjItMS4zLDAuMkgwQzAsNjcuNiwwLDU4LjEsMCw1OC4xeiBNMS43LDYyaDEuNQoJCWMwLjYsMCwxLTAuMSwxLjMtMC4zYzAuMy0wLjIsMC40LTAuNSwwLjQtMWMwLTAuNC0wLjItMC43LTAuNS0wLjljLTAuMy0wLjItMC44LTAuMy0xLjQtMC4zSDEuN0wxLjcsNjJMMS43LDYyeiBNMS43LDY2LjFoMS41CgkJYzAuMiwwLDAuNSwwLDAuNy0wLjFzMC41LTAuMSwwLjctMC4yYzAuMi0wLjEsMC40LTAuMywwLjUtMC40YzAuMS0wLjIsMC4yLTAuNCwwLjItMC44YzAtMC41LTAuMi0wLjktMC41LTEKCQljLTAuMy0wLjItMC45LTAuMy0xLjUtMC4zSDEuN1Y2Ni4xeiIvPgoJPHBhdGggY2xhc3M9InN0MSIgZD0iTTExLjEsNTguMWgxLjd2OS41aC0xLjdWNTguMXoiLz4KCTxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0xNy4zLDU4LjFoMS43djhoNHYxLjVoLTUuN1Y1OC4xeiIvPgoJPHBhdGggY2xhc3M9InN0MSIgZD0iTTI2LjUsNTguMWgxLjd2OGg0djEuNWgtNS43TDI2LjUsNTguMUwyNi41LDU4LjF6Ii8+Cgk8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMzUuNyw1OC4xaDEuN3Y5LjVoLTEuN1Y1OC4xeiIvPgoJPHBhdGggY2xhc3M9InN0MSIgZD0iTTQxLjksNTguMWg2LjN2MS41aC00LjZWNjJINDh2MS40aC00LjNWNjZoNC44djEuNWgtNi41VjU4LjF6Ii8+CjwvZz4KPC9zdmc+Cg==
+    href: '#'
+servers:
+- url: https://paella-sandbox.billie.io/api/v2
+  description: Test Sandbox API
+- url: https://paella.billie.io/api/v2
+  description: Production API
+tags:
+- name: Captures
+paths:
+  /invoices:
+    post:
+      tags:
+      - Captures
+      summary: Create Invoice
+      description: '**Purpose:**
+
+
+        Captures against an order. This can be done against part of the authorised order amount (partial capture) or its entire amount (full capture).
+
+
+        For partial captures, please submit each as a separate request specifying the amount until the full amount of the associated Order is reached.
+
+
+        **Preconditions:**
+
+
+        - `id`: The unique identifier of the order
+
+        - Order with `id` has a sufficient unshipped `amount` (not lower than the `amount` provided to be captured).
+
+        - Invoice Number present as `external_code`
+
+        - Invoice present and reachable for download at `invoice_url`
+
+
+        **Success:**
+
+
+        - Response Code: `HTTP 201`
+
+        - Response body: ''uuid` -> unique identifier of the capture
+
+
+        **Attention:**
+
+
+        - Only one order `id` can be provided per request.
+
+        - Don’t submit a negative `amount` value.
+
+        - The referenced order will change its state to `shipped` if the full `amount` is captured and `partially_shipped` for a capture amount lower then the order amount.
+
+        - Capturing an order that is already partially shipped with an amount equal to the remaining amount will change the state of the order from `partially_shipped` to `shipped`.'
+      operationId: invoice_create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateInvoiceRequest'
+      responses:
+        '201':
+          description: Invoice successfully created
+          content:
+            application/json:
+              schema:
+                required:
+                - uuid
+                properties:
+                  uuid:
+                    $ref: '#/components/schemas/UUID'
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      security:
+      - oauth2: []
+  /invoices/{captureId}:
+    get:
+      tags:
+      - Captures
+      summary: Get Invoice
+      description: '**Purpose:**
+
+
+        Retrieves full information about a capture.
+
+
+        **Preconditions:**
+
+
+        - `captureId`: The unique identifier of the capture
+
+
+        **Success:**
+
+
+        - Response Code: `HTTP 200`'
+      operationId: get_invoice
+      parameters:
+      - name: captureId
+        in: path
+        description: The unique identifier of the capture
+        required: true
+        schema:
+          $ref: '#/components/schemas/UUID'
+      responses:
+        '200':
+          description: Invoice Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInvoiceResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags:
+      - Captures
+      summary: Cancel Invoice
+      description: '**Purpose:**
+
+
+        Refunds the full amount of a past capture.
+
+
+        **Preconditions:**
+
+
+        - `captureId`: The unique identifier of the capture
+
+
+        **Success:**
+
+
+        - Response Code: `HTTP 204`'
+      operationId: invoice_cancel_v2
+      parameters:
+      - name: captureId
+        in: path
+        description: The unique identifier of the capture
+        required: true
+        schema:
+          $ref: '#/components/schemas/UUID'
+      responses:
+        '204':
+          description: Invoice successfully cancelled
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      security:
+      - oauth2: []
+  /invoices/{captureId}/confirm-payment:
+    post:
+      tags:
+      - Captures
+      summary: Confirm Invoice Payment
+      description: '**Purpose:**
+
+
+        Confirms that the buyer (your customer) paid a given amount relating to a capture to your bank account, rather than Billie''s. Billie will reduce the outstanding amount accordingly and debit the amount you provided from your upcoming settlement.
+
+
+        **Preconditions:**
+
+
+        - `captureId`: The unique identifier of the capture
+
+        - amount that the buyer paid to you
+
+
+        **Success:**
+
+
+        - Response Code: `HTTP 204`
+
+
+        **Attention:**
+
+
+        - The amount provided does not exceed the sum of all captures of the related order.'
+      operationId: invoice_payment_confirm
+      parameters:
+      - name: captureId
+        in: path
+        description: The unique identifier of the capture
+        required: true
+        schema:
+          $ref: '#/components/schemas/UUID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - paid_amount
+              properties:
+                paid_amount:
+                  description: The amount paid to the merchant from debtor.
+                  type: number
+                  format: float
+                  minimum: 0.1
+              type: object
+      responses:
+        '204':
+          description: Invoice payment successfully confirmed
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      security:
+      - oauth2: []
+  /invoices/{captureId}/credit-notes:
+    post:
+      tags:
+      - Captures
+      summary: Create Credit Note
+      description: '**Purpose:**
+
+
+        To refund against a previous capture. This can be done against part of the captured amount (partial refund) or its entire amount (full refund).
+
+
+        **Preconditions:**
+
+
+        - `captureId`: The unique identifier of the capture
+
+        - `amount`: The amount to be refunded
+
+
+        **Success:**
+
+
+        - Response Code: `HTTP 201`
+
+
+        **Attention:**
+
+
+        - The amount provided in the refund request does not exceed the amount of the capture.'
+      operationId: create_credit_note
+      parameters:
+      - name: captureId
+        in: path
+        description: The unique identifier of the capture
+        required: true
+        schema:
+          $ref: '#/components/schemas/UUID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCreditNoteRequest'
+      responses:
+        '201':
+          description: Credit note successfully created
+          content:
+            application/json:
+              schema:
+                required:
+                - uuid
+                properties:
+                  uuid:
+                    $ref: '#/components/schemas/UUID'
+                type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      security:
+      - oauth2: []
+  /invoices/{captureId}/update-details:
+    post:
+      tags:
+      - Captures
+      summary: Update Invoice
+      description: '**Purpose:**
+
+
+        Provides the external code relating to a capture (the invoice number in your backend) and URL to your invoice document (allowing Billie to obtain it) if not already provided under Create Capture.
+
+
+        **Preconditions:**
+
+
+        - `captureId`: The unique identifier of the capture
+
+
+        **Success:**
+
+
+        - Response Code: `HTTP 204`
+
+
+        **Attention:**
+
+
+        - Invoice Number and Invoice File will be replaced by the new items if already sent in the Create Capture call or previous Update Capture calls.'
+      operationId: invoice_update
+      parameters:
+      - name: captureId
+        in: path
+        description: The unique identifier of the capture
+        required: true
+        schema:
+          $ref: '#/components/schemas/UUID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateInvoiceRequest'
+      responses:
+        '204':
+          description: Invoice successfully updated
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+      security:
+      - oauth2: []
+components:
+  schemas:
+    PaymentMethodCollection:
+      title: Eligible Payment Methods
+      type: array
+      items:
+        $ref: '#/components/schemas/PaymentMethod'
+    UpdateInvoiceRequest:
+      title: Invoice Update Request
+      description: Invoice Update Request
+      properties:
+        external_code:
+          $ref: '#/components/schemas/TinyText'
+        invoice_url:
+          $ref: '#/components/schemas/TinyText'
+      type: object
+    ErrorsObject:
+      title: API Errors
+      properties:
+        errors:
+          type: array
+          items:
+            required:
+            - title
+            - code
+            properties:
+              title:
+                description: Error message
+                type: string
+              code:
+                description: Error code
+                type:
+                - string
+                - 'null'
+              source:
+                description: Property path where the error occurred, if applicable
+                type:
+                - string
+                - 'null'
+            type: object
+      type: object
+    DateTime:
+      title: Date-Time
+      type: string
+      format: date-time
+      example: '2019-01-20 14:00:00'
+    CreateInvoiceRequest:
+      title: Create Invoice Request
+      required:
+      - orders
+      - external_code
+      - invoice_url
+      - amount
+      properties:
+        orders:
+          description: Include all the order ids that you want to create an invoice for (currently only one order is supported).
+          type: array
+          items:
+            $ref: '#/components/schemas/UUID'
+          example: '[''76bd5f90-3bd5-4e26-b21e-80827539c4b6'']'
+        external_code:
+          $ref: '#/components/schemas/TinyText'
+        invoice_url:
+          $ref: '#/components/schemas/TinyText'
+        shipping_info:
+          $ref: '#/components/schemas/ShippingInfo'
+        amount:
+          $ref: '#/components/schemas/AmountDTO'
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItemsRequest'
+      type: object
+    TinyText:
+      title: string
+      type: string
+      maxLength: 255
+    CreateCreditNoteRequest:
+      title: Create Credit Note
+      description: Create Credit Note
+      required:
+      - external_code
+      - amount
+      properties:
+        external_code:
+          $ref: '#/components/schemas/TinyText'
+        amount:
+          $ref: '#/components/schemas/AmountDTO'
+        comment:
+          $ref: '#/components/schemas/TinyText'
+        line_items:
+          description: Line items from the invoice which this credit note is created for.
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItemsRequest'
+      type: object
+    PaymentMethodType:
+      title: Payment Method Type
+      type: string
+      enum:
+      - bank_transfer
+      - direct_debit
+      example: bank_transfer
+    PaymentMethod:
+      title: Payment Method
+      properties:
+        type:
+          $ref: '#/components/schemas/PaymentMethodType'
+        data:
+          description: Payment method details
+          properties:
+            iban:
+              $ref: '#/components/schemas/TinyText'
+            bic:
+              $ref: '#/components/schemas/TinyText'
+            bank_name:
+              description: Name of the Bank entity
+              type:
+              - string
+              - 'null'
+            bank_giro:
+              description: Bank giro number (Sweden only)
+              type:
+              - string
+              - 'null'
+            sort_code:
+              description: Bank sort code (GB only)
+              type:
+              - string
+              - 'null'
+            account_number:
+              description: Bank account number (GB, NL and NO)
+              type:
+              - string
+              - 'null'
+            bank_account_owner:
+              description: Bank account owner entity
+              type: string
+            mandate_reference:
+              description: Direct Debit SEPA Mandate Reference (for Direct Debit only)
+              type:
+              - string
+              - 'null'
+            mandate_execution_date:
+              $ref: '#/components/schemas/DateTime'
+            creditor_identification:
+              description: Creditor Identification Code (for Direct Debit only)
+              type:
+              - string
+              - 'null'
+          type: object
+      type: object
+    LineItemsRequest:
+      title: Line Item Request
+      description: Line Item Request
+      properties:
+        external_id:
+          type:
+          - string
+          - 'null'
+        title:
+          $ref: '#/components/schemas/TinyText'
+        description:
+          type:
+          - string
+          - 'null'
+        quantity:
+          type: number
+          format: int
+        category:
+          type:
+          - string
+          - 'null'
+        brand:
+          type:
+          - string
+          - 'null'
+        gtin:
+          type:
+          - string
+          - 'null'
+        mpn:
+          type:
+          - string
+          - 'null'
+        amount_gross:
+          description: Value is in cents
+          type: number
+          format: int
+        amount_net:
+          description: Value is in cents
+          type:
+          - number
+          - 'null'
+          format: int
+        amount_tax:
+          description: Value is in cents
+          type:
+          - number
+          - 'null'
+          format: int
+        tax_rate:
+          description: Value is in cents
+          type:
+          - number
+          - 'null'
+          format: int
+        unit_price:
+          description: Value is in cents
+          type: number
+          format: int
+        total_discount_amount:
+          description: Value is in cents
+          type:
+          - number
+          - 'null'
+          format: int
+        product_url:
+          type:
+          - string
+          - 'null'
+        image_url:
+          type:
+          - string
+          - 'null'
+        quantity_unit:
+          type:
+          - string
+          - 'null'
+        type:
+          type:
+          - string
+          - 'null'
+      type: object
+    GetInvoiceResponse:
+      title: Get Invoice Response
+      description: Get Invoice Response
+      properties:
+        uuid:
+          $ref: '#/components/schemas/UUID'
+        invoice_number:
+          description: Customer facing merchant defined invoice number which must be unique.
+          type:
+          - string
+          - 'null'
+        duration:
+          description: The defined time allowed for payment. Measured in days.
+          type: number
+        payout_amount:
+          description: The amount that will be paid out to the merchant.
+          type: number
+          format: float
+        amount:
+          $ref: '#/components/schemas/AmountDTO'
+        outstanding_amount:
+          description: The remaining amount that has to be paid by the debtor still.
+          type: number
+          format: float
+        fee_amount:
+          description: The fee amount per invoice paid by the merchant to Billie.
+          type: number
+          format: float
+        fee_rate:
+          description: The fee rate is the percentage that the merchant pays to Billie.
+          type: number
+          format: float
+        created_at:
+          description: The date and time when the invoice was created.
+          type: string
+          format: date
+          example: '2019-03-20'
+        due_date:
+          description: The date when this invoice is due to be paid back.
+          type: string
+          format: date
+          example: '2019-03-20'
+        state:
+          description: The state of the invoice.
+          type: string
+          example: created
+        selected_payment_method:
+          type:
+          - string
+          - 'null'
+          enum:
+          - bank_transfer
+          - direct_debit
+          example: bank_transfer
+        payment_methods:
+          $ref: '#/components/schemas/PaymentMethodCollection'
+      type: object
+    UUID:
+      type: string
+      format: uuid
+      maxLength: 36
+      minLength: 36
+      example: 12345667-890a-bcde-f123-34567890abcd
+    AmountDTO:
+      title: object <net, gross, tax>
+      description: The amount object with split values for net, gross and tax
+      required:
+      - net
+      - gross
+      - tax
+      properties:
+        gross:
+          description: Value greater than 0, with max. 2 decimals. It should equal to net + tax.
+          type: number
+          format: float
+          minimum: 0.01
+          example: 260.27
+        net:
+          description: Value greater than 0, with max. 2 decimals.
+          type: number
+          format: float
+          minimum: 0.01
+          example: 200.12
+        tax:
+          description: Value greater than or equal to 0, with max. 2 decimals.
+          type: number
+          format: float
+          minimum: 0
+          example: 60.15
+      type: object
+    ShippingInfo:
+      title: Shipping information for tracking, delivery, method.
+      description: Shipping information for tracking, delivery, method.
+      properties:
+        return_shipping_company:
+          description: 'Name of the shipping company for the return shipment (as specific as possible). Maximum 100 characters. Example: ''DHL US'' and not only ''DHL'''
+        return_tracking_number:
+          description: Tracking number for the return shipment. Maximum 100 characters.
+        return_tracking_url:
+          description: URL where the customer can track the return shipment. Maximum 1024 characters.
+        shipping_company:
+          description: 'Name of the shipping company (as specific as possible). Maximum 100 characters. Example: ''DHL US'' and not only ''DHL'''
+        shipping_method:
+          description: Shipping method. Example 'PickUpStore' or 'Postal'.
+        tracking_number:
+          description: Tracking number for the shipment. Maximum 100 characters.
+        tracking_url:
+          description: URI where the customer can track their shipment. Maximum 1024 characters.
+      type: object
+  responses:
+    ServerError:
+      description: Unexpected Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorsObject'
+    Unauthorized:
+      description: Unauthorized request or invalid credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorsObject'
+    BadRequest:
+      description: Invalid Request Data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorsObject'
+    NotFound:
+      description: Resource Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorsObject'
+    Forbidden:
+      description: Forbidden Request. The operation cannot be completed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorsObject'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: 'This authentication mechanism is based on the OAuth 2.0 prototocol and requires a Client ID, a Client Secret Key and
+
+        in some cases also a user and password.
+
+
+        With these credentials, the client should request a token using the `POST /api/v1/oauth/token` endpoint,
+
+        which should be used in the `Authorization` header together with the `Bearer` challenge to authenticate all the requests.
+
+
+        > Example: `Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c`.'
+      flows:
+        password:
+          tokenUrl: /oauth/token
+          scopes:
+            default: default
+x-provenance:
+  method: searched
+  source: https://docs.billie.io/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.billie.io/reference/confirm_authorization_v2.md
+  - https://docs.billie.io/reference/create_checkout_session_v2.md
+  - https://docs.billie.io/reference/create_credit_note.md
+  - https://docs.billie.io/reference/create_hpp_checkout_session_v2.md
+  - https://docs.billie.io/reference/get_checkout_session_authorization_v2.md
+  - https://docs.billie.io/reference/get_invoice.md
+  - https://docs.billie.io/reference/get_legal_forms.md
+  - https://docs.billie.io/reference/invoice_cancel_v2.md
+  - https://docs.billie.io/reference/invoice_create.md
+  - https://docs.billie.io/reference/invoice_payment_confirm.md
+  - https://docs.billie.io/reference/invoice_update.md
+  - https://docs.billie.io/reference/oauth_token_create.md
+  - https://docs.billie.io/reference/oauth_token_revoke.md
+  - https://docs.billie.io/reference/oauth_token_validate.md
+  - https://docs.billie.io/reference/order_cancel_v2.md
+  - https://docs.billie.io/reference/order_create_v2.md
+  - https://docs.billie.io/reference/order_get_details_v2.md
+  - https://docs.billie.io/reference/order_update_v2.md
+  merge:
+    pages: 18
+    deduped: 152
+    conflicts_kept_first: 0
