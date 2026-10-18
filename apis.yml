@@ -295,6 +295,8 @@ apis:
   humanURL: https://docs.billie.io/reference/integration-checklist
   baseURL: https://paella.billie.io/api/v2
   tags:
+  - Capture
+  tags_raw:
   - Captures
   properties:
   - type: OpenAPI
