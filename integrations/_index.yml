@@ -65,3 +65,52 @@
       lapsed: null
   status: not-a-workflow
   arazzo: null
+- slug: billie-packagist
+  label: Packagist
+  partner: packagist
+  partner_name: Packagist
+  category: official SDK (PHP)
+  type: register
+  channel: package-registry
+  evidence: https://packagist.org/packages/billie/api-php-sdk
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Packagist (public registry JSON)
+    spec_file: null
+    language: PHP
+    packages:
+    - name: billie/api-php-sdk
+      version: 3.2.0
+      released: '2025-02-28'
+      released_field: time
+      lapsed: false
+      page: https://packagist.org/packages/billie/api-php-sdk
+      repo_leg: github-org:ozean12
+      publisher_leg: org:billie
+      matched_by: github-org
+    - name: billie/magento2-payment-module
+      version: 2.0.0.2
+      released: '2022-09-02'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/billie/magento2-payment-module
+      repo_leg: github-org:ozean12
+      publisher_leg: org:billie
+      matched_by: github-org
+    - name: billie/shopware6-payment-module
+      version: 4.0.0
+      released: '2025-09-04'
+      released_field: time
+      lapsed: false
+      page: https://packagist.org/packages/billie/shopware6-payment-module
+      repo_leg: github-org:ozean12
+      publisher_leg: org:billie
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null
